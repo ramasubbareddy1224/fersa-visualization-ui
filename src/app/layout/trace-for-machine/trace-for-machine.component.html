@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <h2>TRACEABILITY FOR MACHINE</h2>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+        <mat-form-field>
+            <mat-label>Machine</mat-label>
+            <mat-select>
+                <mat-option value="option1">z3m01</mat-option>
+                <mat-option value="option2">z3m02</mat-option>
+                <mat-option value="option3">z3m03</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Start Date" [formControl]="dateControl"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker1" placeholder="End Date" [formControl]="dateControl"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary">Submit</button>
+    </div>
+
+</div>
