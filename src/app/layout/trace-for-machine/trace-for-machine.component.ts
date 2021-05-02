@@ -1,17 +1,21 @@
+import { ExcelService } from './../../shared/excel/excel.service';
+import { MachineNames } from './../../constants';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-trace-for-machine',
-  templateUrl: './trace-for-machine.component.html',
-  styleUrls: ['./trace-for-machine.component.scss']
+    selector: 'app-trace-for-machine',
+    templateUrl: './trace-for-machine.component.html',
+    styleUrls: ['./trace-for-machine.component.scss']
 })
 export class TraceForMachineComponent implements OnInit {
 
     public disabled = false;
     public showSpinners = true;
     public showSeconds = true;
-    public touchUi = false;
     public enableMeridian = true;
     public minDate: Date;
     public maxDate: Date;
@@ -22,26 +26,72 @@ export class TraceForMachineComponent implements OnInit {
     public hideTime = false;
     @ViewChild('picker') picker: any;
 
-    public dateControl = new FormControl(null);
+    loading = false;
+    machineList = MachineNames;
+    selectedMachine = new FormControl(null, Validators.required);
+    startDate = new FormControl(null, Validators.required);
+    endDate = new FormControl(null, Validators.required);
 
-    public options = [
-        { value: true, label: 'True' },
-        { value: false, label: 'False' }
-    ];
+    private machineInfoURL = `${environment.API_URL}trace-for-machine/getmachinedetails`;
 
-    public listColors = ['primary', 'accent', 'warn'];
-
-    public stepHours = [1, 2, 3, 4, 5];
-    public stepMinutes = [1, 5, 10, 15, 20, 25];
-    public stepSeconds = [1, 5, 10, 15, 20, 25];
-
-    toppings = new FormControl();
-
-    toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
-    constructor() { }
+    displayedColumns = [];
+    dataSource: any;
+    constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService,) { }
 
     ngOnInit() {
+    }
+    search() {
+        this.loading = true;
+        console.log(new Date(this.startDate.value).getTime());
+        console.log(this.endDate.value);
+        // console.log(this.selectedMachine);
+        console.log(this.selectedMachine.value);
+
+        const payload = {
+            "machine": "game-of-thrones",
+            "startDate": "2021-05-02T05:51:11.920Z",
+            "endDate": "2021-05-02T05:57:11.920Z"
+        }
+        this.getMachineInfo(payload);
+    }
+    getMachineInfo(payload) {
+        this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
+            console.log({ res });
+            if (res.items.length) {
+                const row = res.items[0];
+                this.displayedColumns = [].concat('date', ...Object.keys(row).filter(d => d != 'date'));
+                this.dataSource = new MatTableDataSource(res.items);
+
+                // this.excelService.exportToEXcel({
+                //     data: res.items,
+                //     sheetName: "tracemachine",
+                //     excelExtension: '.xlsx',
+                //     excelFileName: `tracemachine_${this.selectedMachine}${new Date().getTime()}`
+                // })
+            }
+            this.loading = false;
+
+
+        });
+    }
+    downloadData() {
+        const payload = {
+            "machine": "game-of-thrones",
+            "startDate": "2021-05-02T05:51:11.920Z",
+            "endDate": "2021-05-02T05:57:11.920Z"
+        }
+        this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
+            console.log({ res });
+            if (res.items.length) {
+                const row = res.items[0];
+                this.excelService.exportToEXcel({
+                    data: res.items,
+                    sheetName: "tracemachine",
+                    excelExtension: '.xlsx',
+                    excelFileName: `tracemachine_${this.selectedMachine}${new Date().getTime()}`
+                })
+            }
+        });
     }
 
 }
