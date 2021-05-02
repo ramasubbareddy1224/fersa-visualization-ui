@@ -1,3 +1,4 @@
+import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.component';
 import { TraceForMachineComponent } from './trace-for-machine/trace-for-machine.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -30,6 +31,10 @@ const routes: Routes = [
             {
                 path: 'trace-for-machine',
                 component: TraceForMachineComponent
+            },
+            {
+                path: 'trace-for-piece',
+                component: TraceForPieceComponent
             }
         ]
     }

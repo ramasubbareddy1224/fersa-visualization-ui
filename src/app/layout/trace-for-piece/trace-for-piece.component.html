@@ -1,0 +1,23 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <h2>TRACEABILITY FOR PIECE</h2>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+        <mat-form-field>
+            <input matInput placeholder="DM CONO IN" [formControl]="DMConoIn">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput placeholder="DM CONO OUT" [formControl]="DMConoOut">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput placeholder="DM RING" [formControl]="DMConoRing">
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" (click)="search()">Submit</button>
+    </div>
+</div>

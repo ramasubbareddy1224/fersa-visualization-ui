@@ -13,6 +13,7 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         NavComponent,
         TopnavComponent,
         SidebarComponent,
-        TraceForMachineComponent
+        TraceForMachineComponent,
+        TraceForPieceComponent
     ]
 
 })
