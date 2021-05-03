@@ -36,7 +36,7 @@ export class TraceForMachineComponent implements OnInit {
 
     displayedColumns = [];
     dataSource: any;
-    constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService,) { }
+    constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit() {
     }
