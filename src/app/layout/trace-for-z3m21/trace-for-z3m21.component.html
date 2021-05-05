@@ -1,1 +1,112 @@
-<p>trace-for-z3m21 works!</p>
+<div fxLayout="row" fxLayoutAlign="center center">
+    <h2>TRACEABILITY FOR Z3M21</h2>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Start Date" [formControl]="startDate"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker1" placeholder="End Date" [formControl]="endDate"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" [disabled]="startDate.invalid || endDate.invalid"
+            (click)="search()">Submit</button>
+    </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loading ; else showWhenLoaded">
+    <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
+</div>
+<ng-template #showWhenLoaded>
+    <div [hidden]="CanShowGrid==false">
+        <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+            <div fxFlex>
+                <h5 class="h5-header-title">CONO IN</h5>
+                <button class="mb-5" mat-raised-button color="basic" (click)="downloadInData()">
+                    <mat-icon>download</mat-icon>
+                    Export to Excel
+                </button>
+                <table mat-table [dataSource]="INdataSource" class="mat-elevation-z8">
+                    <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
+                        matColumnDef="{{disCol}}">
+                        <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+                        <div *ngIf="disCol=='date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol] | date:'MMM d, y H:mm' }} </td>
+                        </div>
+                        <div *ngIf="disCol !== 'date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
+                        </div>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div fxFlex>
+                <h5 class="h5-header-title">CONO OUT</h5>
+                <button class="mb-5" mat-raised-button color="basic" (click)="downloadOutData()">
+                    <mat-icon>download</mat-icon>
+                    Export to Excel
+                </button>
+                <table mat-table [dataSource]="OUTdataSource" class="mat-elevation-z8">
+
+                    <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
+                        matColumnDef="{{disCol}}">
+                        <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+                        <div *ngIf="disCol=='date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol] | date:'MMM d, y H:mm' }} </td>
+                        </div>
+                        <div *ngIf="disCol !== 'date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
+                        </div>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div fxFlex>
+                <h5 class="h5-header-title">RING</h5>
+                <button class="mb-5" mat-raised-button color="basic" (click)="downloadRingData()">
+                    <mat-icon>download</mat-icon>
+                    Export to Excel
+                </button>
+                <table mat-table [dataSource]="RINGdataSource" class="mat-elevation-z8">
+
+                    <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
+                        matColumnDef="{{disCol}}">
+                        <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+                        <div *ngIf="disCol=='date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol] | date:'MMM d, y H:mm' }} </td>
+                        </div>
+                        <div *ngIf="disCol !== 'date'">
+                            <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
+                        </div>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-template>
