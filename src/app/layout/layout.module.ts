@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.component';
+import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.compon
         TopnavComponent,
         SidebarComponent,
         TraceForMachineComponent,
-        TraceForPieceComponent
+        TraceForPieceComponent,
+        TraceForZ3m21Component
     ]
 
 })

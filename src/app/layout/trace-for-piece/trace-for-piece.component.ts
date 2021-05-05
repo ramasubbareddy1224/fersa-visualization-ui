@@ -4,6 +4,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { ExcelService } from './../../shared/excel/excel.service';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
     selector: 'app-trace-for-piece',
     templateUrl: './trace-for-piece.component.html',
@@ -17,14 +19,19 @@ export class TraceForPieceComponent implements OnInit {
     DMConoRing = new FormControl(null);
 
     loading = false;
-    displayedColumns = [];
-    dataSource: any;
+    displayedColumns = ['name', 'date'];
+    INdataSource: any;
+    OUTdataSource: any;
+    RINGdataSource: any;
+    CanShowGrid = false;
     constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit(): void {
     }
     search() {
+        this.CanShowGrid = true;
         this.loading = true;
+        this.INdataSource = this.OUTdataSource = this.RINGdataSource = null;
         const payload = {};
         if (this.DMConoIn.value) {
             payload["field"] = "cono_in";
@@ -40,19 +47,57 @@ export class TraceForPieceComponent implements OnInit {
 
     }
     getMachineInfo(payload) {
-        this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
-            console.log({ res });
-            this.DMConoIn.setValue(res.cono_in);
-            this.DMConoOut.setValue(res.cono_out);
-            this.DMConoRing.setValue(res.cono_ring);
-            if (res.cono_in_details.length) {
-                const row = res.cono_in_details[0];
-                this.displayedColumns = [].concat('date', ...Object.keys(row).filter(d => d != 'date'));
-                this.dataSource = new MatTableDataSource(res.cono_in_details);
-            }
-            this.loading = false;
-        });
+        this._httpClient.post(this.machineInfoURL, payload)
+            .pipe(catchError((error: any) => {
+                this.loading = false;
+                console.log({ error });
+                return of([]);
+            }))
+            .subscribe((res: any) => {
+                console.log({ res });
+                this.DMConoIn.setValue(res.cono_in);
+                this.DMConoOut.setValue(res.cono_out);
+                this.DMConoRing.setValue(res.cono_ring);
+                if (res.cono_in_details && res.cono_in_details.length) {
+                    this.INdataSource = new MatTableDataSource(res.cono_in_details.map(row => ({ name: row.name, date: row.date })));
+                }
+                if (res.cono_out_details && res.cono_out_details.length) {
+                    this.OUTdataSource = new MatTableDataSource(res.cono_out_details.map(row => ({ name: row.name, date: row.date })));
+                }
+                if (res.cono_ring_details && res.cono_ring_details.length) {
+                    this.RINGdataSource = new MatTableDataSource(res.cono_ring_details.map(row => ({ name: row.name, date: row.date })));
+                }
+                this.loading = false;
+            })
     }
-    downloadData() { }
-
+    downloadInData() {
+        if (this.INdataSource && this.INdataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.INdataSource.data,
+                sheetName: "tracemachine",
+                excelExtension: '.xlsx',
+                excelFileName: `tracemachine_cono_in_${new Date().getTime()}`
+            })
+        }
+    }
+    downloadOutData() {
+        if (this.OUTdataSource && this.OUTdataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.OUTdataSource.data,
+                sheetName: "tracemachine",
+                excelExtension: '.xlsx',
+                excelFileName: `tracemachine_cono_out_${new Date().getTime()}`
+            })
+        }
+     }
+    downloadRingData() {
+        if (this.RINGdataSource && this.RINGdataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.RINGdataSource.data,
+                sheetName: "tracemachine",
+                excelExtension: '.xlsx',
+                excelFileName: `tracemachine_ring_${new Date().getTime()}`
+            })
+        }
+     }
 }

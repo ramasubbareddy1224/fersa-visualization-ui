@@ -61,13 +61,6 @@ export class TraceForMachineComponent implements OnInit {
                 const row = res.items[0];
                 this.displayedColumns = [].concat('date', ...Object.keys(row).filter(d => d != 'date'));
                 this.dataSource = new MatTableDataSource(res.items);
-
-                // this.excelService.exportToEXcel({
-                //     data: res.items,
-                //     sheetName: "tracemachine",
-                //     excelExtension: '.xlsx',
-                //     excelFileName: `tracemachine_${this.selectedMachine}${new Date().getTime()}`
-                // })
             }
             this.loading = false;
 
