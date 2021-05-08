@@ -54,9 +54,20 @@ export class TraceForZ3m21Component implements OnInit {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
             console.log({ res });
             if (res && res.length) {
-                this.INdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO })));
-                this.OUTdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO })));
-                this.RINGdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO })));
+                this.INdataSource = new MatTableDataSource(
+                    res
+                        .map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO }))
+                        .filter(f => f.datamatrix != "")
+                );
+                this.OUTdataSource = new MatTableDataSource(
+                    res
+                        .map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO }))
+                        .filter(f => f.datamatrix != "")
+                );
+                this.RINGdataSource = new MatTableDataSource(
+                    res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO }))
+                        .filter(f => f.datamatrix != "")
+                );
             }
             this.loading = false;
 
