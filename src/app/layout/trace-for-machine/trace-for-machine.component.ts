@@ -42,15 +42,13 @@ export class TraceForMachineComponent implements OnInit {
     }
     search() {
         this.loading = true;
-        console.log(new Date(this.startDate.value).getTime());
+        console.log(new Date(this.startDate.value).toISOString());
         console.log(this.endDate.value);
-        // console.log(this.selectedMachine);
-        console.log(this.selectedMachine.value);
 
         const payload = {
-            "machine": "game-of-thrones",
-            "startDate": "2021-05-02T05:51:11.920Z",
-            "endDate": "2021-05-02T05:57:11.920Z"
+            "machine": this.selectedMachine.value,
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString()
         }
         this.getMachineInfo(payload);
     }
@@ -59,7 +57,7 @@ export class TraceForMachineComponent implements OnInit {
             console.log({ res });
             if (res.items.length) {
                 const row = res.items[0];
-                this.displayedColumns = [].concat('date', ...Object.keys(row).filter(d => d != 'date'));
+                this.displayedColumns = [].concat('created_at', ...Object.keys(row).filter(d => d != 'created_at'));
                 this.dataSource = new MatTableDataSource(res.items);
             }
             this.loading = false;
@@ -68,23 +66,14 @@ export class TraceForMachineComponent implements OnInit {
         });
     }
     downloadData() {
-        const payload = {
-            "machine": "game-of-thrones",
-            "startDate": "2021-05-02T05:51:11.920Z",
-            "endDate": "2021-05-02T05:57:11.920Z"
+        if (this.dataSource && this.dataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.dataSource.data,
+                sheetName: "tracemachine",
+                excelExtension: '.xlsx',
+                excelFileName: `tracemachine_${this.selectedMachine}${new Date().getTime()}`
+            })
         }
-        this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
-            console.log({ res });
-            if (res.items.length) {
-                const row = res.items[0];
-                this.excelService.exportToEXcel({
-                    data: res.items,
-                    sheetName: "tracemachine",
-                    excelExtension: '.xlsx',
-                    excelFileName: `tracemachine_${this.selectedMachine}${new Date().getTime()}`
-                })
-            }
-        });
     }
 
 }

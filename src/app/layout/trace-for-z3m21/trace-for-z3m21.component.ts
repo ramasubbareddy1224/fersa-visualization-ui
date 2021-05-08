@@ -43,12 +43,10 @@ export class TraceForZ3m21Component implements OnInit {
     search() {
         this.CanShowGrid = true;
         this.loading = true;
-        console.log(new Date(this.startDate.value).getTime());
-        console.log(this.endDate.value);
 
         const payload = {
-            "startDate": "2021-05-02T05:58:11.920Z",
-            "endDate": "2021-05-02T06:58:11.920Z"
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString()
         }
         this.getMachineInfo(payload);
     }
@@ -56,9 +54,9 @@ export class TraceForZ3m21Component implements OnInit {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
             console.log({ res });
             if (res && res.length) {
-                this.INdataSource = new MatTableDataSource(res.map(d => ({ date: d.date, datamatrix: d.cono_in })));
-                this.OUTdataSource = new MatTableDataSource(res.map(d => ({ date: d.date, datamatrix: d.cono_out })));
-                this.RINGdataSource = new MatTableDataSource(res.map(d => ({ date: d.date, datamatrix: d.cono_ring })));
+                this.INdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO })));
+                this.OUTdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO })));
+                this.RINGdataSource = new MatTableDataSource(res.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO })));
             }
             this.loading = false;
 

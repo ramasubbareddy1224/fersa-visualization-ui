@@ -34,13 +34,13 @@ export class TraceForPieceComponent implements OnInit {
         this.INdataSource = this.OUTdataSource = this.RINGdataSource = null;
         const payload = {};
         if (this.DMConoIn.value) {
-            payload["field"] = "cono_in";
+            payload["field"] = "DATAMATRIX_IR_IN_CONJUNTO";
             payload["fieldValue"] = this.DMConoIn.value;
         } else if (this.DMConoOut.value) {
-            payload["field"] = "cono_out";
+            payload["field"] = "DATAMATRIX_IR_OUT_CONJUNTO";
             payload["fieldValue"] = this.DMConoOut.value;
         } else if (this.DMConoRing.value) {
-            payload["field"] = "cono_out";
+            payload["field"] = "DATAMATRIX_OR_CONJUNTO";
             payload["fieldValue"] = this.DMConoRing.value;
         }
         this.getMachineInfo(payload);
@@ -59,13 +59,13 @@ export class TraceForPieceComponent implements OnInit {
                 this.DMConoOut.setValue(res.cono_out);
                 this.DMConoRing.setValue(res.cono_ring);
                 if (res.cono_in_details && res.cono_in_details.length) {
-                    this.INdataSource = new MatTableDataSource(res.cono_in_details.map(row => ({ name: row.name, date: row.date })));
+                    this.INdataSource = new MatTableDataSource(res.cono_in_details.map(row => ({ name: row.machine, date: row.created_at })));
                 }
                 if (res.cono_out_details && res.cono_out_details.length) {
-                    this.OUTdataSource = new MatTableDataSource(res.cono_out_details.map(row => ({ name: row.name, date: row.date })));
+                    this.OUTdataSource = new MatTableDataSource(res.cono_out_details.map(row => ({ name: row.machine, date: row.created_at })));
                 }
                 if (res.cono_ring_details && res.cono_ring_details.length) {
-                    this.RINGdataSource = new MatTableDataSource(res.cono_ring_details.map(row => ({ name: row.name, date: row.date })));
+                    this.RINGdataSource = new MatTableDataSource(res.cono_ring_details.map(row => ({ name: row.machine, date: row.created_at })));
                 }
                 this.loading = false;
             })
