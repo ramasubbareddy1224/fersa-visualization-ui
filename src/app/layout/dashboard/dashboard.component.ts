@@ -66,5 +66,9 @@ export class DashboardComponent implements OnInit {
         ];
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
+    paged(e) {
+        console.log(e.pageSize);
+        console.log(e.pageIndex);
+    }
 }
