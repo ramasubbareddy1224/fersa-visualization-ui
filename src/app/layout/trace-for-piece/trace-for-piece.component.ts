@@ -89,7 +89,7 @@ export class TraceForPieceComponent implements OnInit {
                 excelFileName: `tracemachine_cono_out_${new Date().getTime()}`
             })
         }
-     }
+    }
     downloadRingData() {
         if (this.RINGdataSource && this.RINGdataSource.data) {
             this.excelService.exportToEXcel({
@@ -99,5 +99,29 @@ export class TraceForPieceComponent implements OnInit {
                 excelFileName: `tracemachine_ring_${new Date().getTime()}`
             })
         }
-     }
+    }
+    downloadAllData() {
+        const allData = [];
+        if (this.INdataSource && this.INdataSource.data) {
+            const data = this.INdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'CONO IN' }));
+            allData.push(...data);
+        }
+        if (this.OUTdataSource && this.OUTdataSource.data) {
+            const data = this.OUTdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'CONO OUT' }));
+            allData.push(...data);
+        }
+        if (this.RINGdataSource && this.RINGdataSource.data) {
+            const data = this.RINGdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'RING' }));
+            allData.push(...data);
+        }
+        if (allData.length) {
+            this.excelService.exportToEXcel({
+                data: allData,
+                sheetName: "tracemachine",
+                excelExtension: '.xlsx',
+                excelFileName: `tracemachine_cono_all_${new Date().getTime()}`
+            })
+        }
+
+    }
 }

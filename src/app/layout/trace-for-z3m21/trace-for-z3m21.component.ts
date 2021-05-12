@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
+import { forkJoin } from 'rxjs';
 @Component({
     selector: 'app-trace-for-z3m21',
     templateUrl: './trace-for-z3m21.component.html',
@@ -30,12 +31,30 @@ export class TraceForZ3m21Component implements OnInit {
     endDate = new FormControl(null, Validators.required);
 
     private machineInfoURL = `${environment.API_URL}trace-for-z3m21-3/getmachinedetails`;
+    private machineInfoByMatchURL = `${environment.API_URL}trace-for-z3m21-3/getmachinedetailsByMatch`;
 
     displayedColumns = ['date', 'datamatrix'];
     INdataSource: any;
     OUTdataSource: any;
     RINGdataSource: any;
     CanShowGrid = false;
+    ConoInpageNumber = 0;
+    ConoInfromSize = 0;
+    ConoInpageSize = 100;
+    ConoIntotalCount = 0;
+
+    ConoOutpageNumber = 0;
+    ConoOutfromSize = 0;
+    ConoOutpageSize = 100;
+    ConoOuttotalCount = 0;
+
+    RingpageNumber = 0;
+    RingfromSize = 0;
+    RingpageSize = 100;
+    RingtotalCount = 0;
+    excel_Download_Size = 1000;
+
+
     constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit() {
@@ -44,11 +63,30 @@ export class TraceForZ3m21Component implements OnInit {
         this.CanShowGrid = true;
         this.loading = true;
 
-        const payload = {
+        const ConoInpayload = {
             "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString()
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "from": this.ConoInfromSize,
+            "size": this.ConoInpageSize,
+            "field": "DATAMATRIX_IR_IN_CONJUNTO"
         }
-        this.getMachineInfo(payload);
+        const ConoOutpayload = {
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "from": this.ConoOutfromSize,
+            "size": this.ConoOutpageSize,
+            "field": "DATAMATRIX_IR_OUT_CONJUNTO"
+        }
+        const Ringpayload = {
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "from": this.RingfromSize,
+            "size": this.RingpageSize,
+            "field": "DATAMATRIX_OR_CONJUNTO"
+        }
+        this.getMachineInfoByMatch(ConoInpayload);
+        this.getMachineInfoByMatch(ConoOutpayload);
+        this.getMachineInfoByMatch(Ringpayload);
     }
     getMachineInfo(payload) {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
@@ -74,6 +112,32 @@ export class TraceForZ3m21Component implements OnInit {
 
         });
     }
+
+    getMachineInfoByMatch(payload) {
+        this._httpClient.post(this.machineInfoByMatchURL, payload).subscribe((res: any) => {
+            console.log({ res });
+            if (payload.field == "DATAMATRIX_IR_IN_CONJUNTO") {
+                this.ConoIntotalCount = res.total;
+                this.INdataSource = new MatTableDataSource(
+                    res.items.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO }))
+                );
+            }
+            else if (payload.field == "DATAMATRIX_IR_OUT_CONJUNTO") {
+                this.ConoOuttotalCount = res.total;
+                this.OUTdataSource = new MatTableDataSource(
+                    res.items.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO }))
+                );
+            }
+            else if (payload.field == "DATAMATRIX_OR_CONJUNTO") {
+                this.RingtotalCount = res.total;
+                this.RINGdataSource = new MatTableDataSource(
+                    res.items.map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO }))
+                );
+            }
+            this.loading = false;
+        });
+    }
+
     downloadInData() {
         if (this.INdataSource && this.INdataSource.data) {
             this.excelService.exportToEXcel({
@@ -103,6 +167,66 @@ export class TraceForZ3m21Component implements OnInit {
                 excelFileName: `tracemachine_ring_${new Date().getTime()}`
             })
         }
+    }
+    pagedConoIn(e) {
+        this.ConoInpageNumber = e.pageIndex;
+        this.ConoInpageSize = e.pageSize;
+        const start = Math.round(((this.ConoInpageNumber + 1) - 1) * e.pageSize);
+        this.ConoInfromSize = start;
+        this.search();
+    }
+    pagedConoOut(e) {
+        this.ConoOutpageNumber = e.pageIndex;
+        this.ConoOutpageSize = e.pageSize;
+        const start = Math.round(((this.ConoOutpageNumber + 1) - 1) * e.pageSize);
+        this.ConoOutfromSize = start;
+        this.search();
+    }
+    pagedRing(e) {
+        this.RingpageNumber = e.pageIndex;
+        this.RingpageSize = e.pageSize;
+        const start = Math.round(((this.RingpageNumber + 1) - 1) * e.pageSize);
+        this.RingfromSize = start;
+        this.search();
+    }
+    downloadAllData() {
+        const allData = [];
+        const ConoInpayload = {
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "size": this.excel_Download_Size,
+            "field": "DATAMATRIX_IR_IN_CONJUNTO"
+        }
+        const ConoOutpayload = {
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "size": this.excel_Download_Size,
+            "field": "DATAMATRIX_IR_OUT_CONJUNTO"
+        }
+        const Ringpayload = {
+            "startDate": new Date(this.startDate.value).toISOString(),
+            "endDate": new Date(this.endDate.value).toISOString(),
+            "size": this.excel_Download_Size,
+            "field": "DATAMATRIX_OR_CONJUNTO"
+        }
+        const conoInApi = this._httpClient.post(this.machineInfoByMatchURL, ConoInpayload);
+        const conoOutApi = this._httpClient.post(this.machineInfoByMatchURL, ConoOutpayload);
+        const conoRingApi = this._httpClient.post(this.machineInfoByMatchURL, Ringpayload);
+        forkJoin([conoInApi, conoOutApi, conoRingApi]).subscribe(res => {
+            allData.push(...res[0]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO, type: 'CONO IN' })));
+            allData.push(...res[1]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO, type: 'CONO OUT' })));
+            allData.push(...res[2]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO, type: 'RING' })));
+
+            if (allData.length) {
+                this.excelService.exportToEXcel({
+                    data: allData,
+                    sheetName: "tracemachine",
+                    excelExtension: '.xlsx',
+                    excelFileName: `tracemachine_cono_all_${new Date().getTime()}`
+                })
+            }
+
+        })
     }
 
 }

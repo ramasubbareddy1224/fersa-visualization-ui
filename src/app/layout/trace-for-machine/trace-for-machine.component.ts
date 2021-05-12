@@ -34,7 +34,7 @@ export class TraceForMachineComponent implements OnInit {
     endDate = new FormControl(null, Validators.required);
     pageNumber = 0;
     fromSize = 0;
-    pageSize = 10;
+    pageSize = 100;
     totalCount = 0;
 
     private machineInfoURL = `${environment.API_URL}trace-for-machine/getmachinedetails`;

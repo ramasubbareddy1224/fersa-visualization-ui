@@ -35,13 +35,15 @@
 </div>
 <ng-template #showWhenLoaded>
     <div [hidden]="CanShowGrid==false">
+        <div fxLayout="row">
+            <button class="mb-5" mat-raised-button color="basic" (click)="downloadAllData()">
+                <mat-icon>download</mat-icon>
+                Export to Excel
+            </button>
+        </div>
         <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
             <div fxFlex>
                 <h5 class="h5-header-title">CONO IN</h5>
-                <button class="mb-5" mat-raised-button color="basic" (click)="downloadInData()">
-                    <mat-icon>download</mat-icon>
-                    Export to Excel
-                </button>
                 <table mat-table [dataSource]="INdataSource" class="mat-elevation-z8">
                     <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
                         matColumnDef="{{disCol}}">
@@ -58,13 +60,11 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+                <mat-paginator (page)="pagedConoIn($event)" [hidePageSize]="true" [pageIndex]="ConoInpageNumber" [length]="ConoIntotalCount" [pageSize]="ConoInpageSize" [pageSizeOptions]="[10,50,100]">
+                </mat-paginator>
             </div>
             <div fxFlex>
                 <h5 class="h5-header-title">CONO OUT</h5>
-                <button class="mb-5" mat-raised-button color="basic" (click)="downloadOutData()">
-                    <mat-icon>download</mat-icon>
-                    Export to Excel
-                </button>
                 <table mat-table [dataSource]="OUTdataSource" class="mat-elevation-z8">
 
                     <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
@@ -82,13 +82,11 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+                <mat-paginator (page)="pagedConoOut($event)" [hidePageSize]="true" [pageIndex]="ConoOutpageNumber" [length]="ConoOuttotalCount" [pageSize]="ConoOutpageSize" [pageSizeOptions]="[10,50,100]">
+                </mat-paginator>
             </div>
             <div fxFlex>
                 <h5 class="h5-header-title">RING</h5>
-                <button class="mb-5" mat-raised-button color="basic" (click)="downloadRingData()">
-                    <mat-icon>download</mat-icon>
-                    Export to Excel
-                </button>
                 <table mat-table [dataSource]="RINGdataSource" class="mat-elevation-z8">
 
                     <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index"
@@ -106,6 +104,8 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+                <mat-paginator (page)="pagedRing($event)" [hidePageSize]="true" [pageIndex]="RingpageNumber" [length]="RingtotalCount" [pageSize]="RingpageSize" [pageSizeOptions]="[10,50,100]">
+                </mat-paginator>
             </div>
         </div>
     </div>
