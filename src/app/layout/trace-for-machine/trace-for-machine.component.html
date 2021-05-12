@@ -58,7 +58,7 @@
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
                     <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
                     <div *ngIf="disCol=='created_at'">
-                        <td mat-cell *matCellDef="let element"> {{element[disCol] | date:'MMM d, y H:mm' }} </td>
+                        <td mat-cell *matCellDef="let element"> {{element[disCol] | date:'d MMM , y H:mm' }} </td>
                     </div>
                     <div *ngIf="disCol !== 'created_at'">
                         <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>

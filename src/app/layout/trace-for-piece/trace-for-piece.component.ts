@@ -103,15 +103,15 @@ export class TraceForPieceComponent implements OnInit {
     downloadAllData() {
         const allData = [];
         if (this.INdataSource && this.INdataSource.data) {
-            const data = this.INdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'CONO IN' }));
+            const data = this.INdataSource.data.map(d => ({ name: d.name, date: new Date(d.date).toLocaleString(), type: 'CONO IN' }));
             allData.push(...data);
         }
         if (this.OUTdataSource && this.OUTdataSource.data) {
-            const data = this.OUTdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'CONO OUT' }));
+            const data = this.OUTdataSource.data.map(d => ({ name: d.name, date: new Date(d.date).toLocaleString(), type: 'CONO OUT' }));
             allData.push(...data);
         }
         if (this.RINGdataSource && this.RINGdataSource.data) {
-            const data = this.RINGdataSource.data.map(d => ({ name: d.name, date: d.date, type: 'RING' }));
+            const data = this.RINGdataSource.data.map(d => ({ name: d.name, date: new Date(d.date).toLocaleString(), type: 'RING' }));
             allData.push(...data);
         }
         if (allData.length) {

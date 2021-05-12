@@ -213,9 +213,9 @@ export class TraceForZ3m21Component implements OnInit {
         const conoOutApi = this._httpClient.post(this.machineInfoByMatchURL, ConoOutpayload);
         const conoRingApi = this._httpClient.post(this.machineInfoByMatchURL, Ringpayload);
         forkJoin([conoInApi, conoOutApi, conoRingApi]).subscribe(res => {
-            allData.push(...res[0]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO, type: 'CONO IN' })));
-            allData.push(...res[1]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO, type: 'CONO OUT' })));
-            allData.push(...res[2]["items"].map(d => ({ date: d.created_at, datamatrix: d.DATAMATRIX_OR_CONJUNTO, type: 'RING' })));
+            allData.push(...res[0]["items"].map(d => ({ date: new Date(d.created_at).toLocaleString(), datamatrix: d.DATAMATRIX_IR_IN_CONJUNTO, type: 'CONO IN' })));
+            allData.push(...res[1]["items"].map(d => ({ date: new Date(d.created_at).toLocaleString(), datamatrix: d.DATAMATRIX_IR_OUT_CONJUNTO, type: 'CONO OUT' })));
+            allData.push(...res[2]["items"].map(d => ({ date: new Date(d.created_at).toLocaleString(), datamatrix: d.DATAMATRIX_OR_CONJUNTO, type: 'RING' })));
 
             if (allData.length) {
                 this.excelService.exportToEXcel({
