@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
+import { Label } from 'ng2-charts';
 export interface PeriodicElement {
     name: string;
     position: number;
@@ -24,6 +25,34 @@ const ELEMENT_DATA: PeriodicElement[] = [
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+    // scatter
+    public scatterChartOptions: ChartOptions = {
+        responsive: true,
+    };
+    public scatterChartLabels: Label[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+
+    public scatterChartData: ChartDataSets[] = [
+        {
+            data: [
+                { x: 0, y: 0.0021249084 },
+                { x: 1, y: 0.0015485245 },
+                { x: 2, y: 0.0024454785 },
+                { x: 3, y: 0.0024918141 },
+                { x: 4, y: 0.0028869088 },
+                { x: 5, y: 0.0017999695 },
+                { x: 6, y: 0.0020547528 },
+                { x: 7, y: 0.0026046061 },
+                { x: 8, y: 0.0011946838 },
+                { x: 9, y: 0.0017796904 },
+            ],
+            label: 'Series A',
+            pointRadius: 10,
+        }
+    ];
+    public scatterChartType: ChartType = 'scatter';
+
+
     displayedColumns = ['position', 'name', 'weight', 'symbol'];
     dataSource = new MatTableDataSource(ELEMENT_DATA);
     places: Array<any> = [];

@@ -1,0 +1,86 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <h2>DAILY REPORT FOR MACHINE</h2>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+        <mat-form-field>
+            <mat-label>Machine</mat-label>
+            <mat-select [formControl]="selectedMachine" name="selectedMachine">
+                <mat-option *ngFor="let name of machineList" [value]="name.value">
+                    {{name.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Start Date" [formControl]="startDate"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker1" placeholder="End Date" [formControl]="endDate"
+                [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary"
+            [disabled]="selectedMachine.invalid || startDate.invalid || endDate.invalid"
+            (click)="search()">Submit</button>
+    </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loading ; else showWhenLoaded">
+    <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
+</div>
+
+<ng-template #showWhenLoaded>
+    <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+        <div fxFlex>
+            <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
+                [chartType]="scatterChartType">
+            </canvas>
+        </div>
+        <div fxFlex>
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+            </canvas>
+        </div>
+    </div>
+    <div class="mb-20">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+                <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <table>
+            <thead *ngFor="let item of reportColumns">
+                <th>
+                    <p>{{item}}</p>
+                </th>
+            </thead>
+
+        </table>
+        <!-- <div fxFlex *ngFor="let item of reportColumns">
+             <p>{{item}}</p>
+        </div> -->
+    </div>
+
+</ng-template>

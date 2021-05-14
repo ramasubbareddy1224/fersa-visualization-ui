@@ -1,5 +1,11 @@
 <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
     <div fxFlex>
+        <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions" [chartType]="scatterChartType">
+        </canvas>
+    </div>
+</div>
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div fxFlex>
         <app-stat [bgClass]="'danger'" [icon]="'dashboard'" [count]="13" [label]="'New Tickets!'"></app-stat>
     </div>
     <div fxFlex>
@@ -11,6 +17,7 @@
     <div fxFlex>
         <app-stat [bgClass]="'info'" [icon]="'contact_support'" [count]="13" [label]="'New Tickets!'"></app-stat>
     </div>
+
 </div>
 
 <div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
@@ -35,7 +42,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator (page)="paged($event)" [hidePageSize]="true" [length]="250" [pageSize]="50" [pageSizeOptions]="[50,100]">
+        <mat-paginator (page)="paged($event)" [hidePageSize]="true" [length]="250" [pageSize]="50"
+            [pageSizeOptions]="[50,100]">
         </mat-paginator>
     </div>
 </div>

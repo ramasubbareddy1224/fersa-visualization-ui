@@ -1,3 +1,4 @@
+import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-report.component';
 import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.component';
 import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.component';
 import { TraceForMachineComponent } from './trace-for-machine/trace-for-machine.component';
@@ -40,7 +41,12 @@ const routes: Routes = [
             {
                 path: 'trace-for-z3m21',
                 component: TraceForZ3m21Component
+            },
+            {
+                path: 'cont-measure-report',
+                component: ContMeasureReportComponent
             }
+
         ]
     }
 ];

@@ -5,7 +5,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
-import { ThemeService } from 'ng2-charts';
 
 @Component({
     selector: 'app-trace-for-machine',

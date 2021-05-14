@@ -15,6 +15,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.component';
 import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.component';
+import { ChartsModule } from 'ng2-charts';
+import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-report.component';
 
 @NgModule({
     imports: [
@@ -28,6 +30,7 @@ import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.compon
         FormsModule,
         ReactiveFormsModule,
         MatDatepickerModule,
+        ChartsModule,
         FlexLayoutModule.withConfig({ addFlexToParent: false })
     ],
     declarations: [
@@ -38,7 +41,8 @@ import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.compon
         SidebarComponent,
         TraceForMachineComponent,
         TraceForPieceComponent,
-        TraceForZ3m21Component
+        TraceForZ3m21Component,
+        ContMeasureReportComponent
     ]
 
 })
