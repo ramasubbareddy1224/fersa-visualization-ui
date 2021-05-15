@@ -40,7 +40,7 @@ export class ContMeasureReportComponent implements OnInit {
             position: 'top',
         }
     };
-    public pieChartLabels: Label[] = [];
+    public pieChartLabels: Label[] = ['OK', 'NOK'];
     public pieChartData: number[] = [];
     public pieChartType: ChartType = 'pie';
     public pieChartLegend = true;
@@ -57,6 +57,17 @@ export class ContMeasureReportComponent implements OnInit {
 
     public scatterChartData: ChartDataSets[] = null;
     public scatterChartType: ChartType = 'scatter';
+
+    public barChartOptions: ChartOptions = {
+        responsive: true,
+        // We use these empty structures as placeholders for dynamic theming.
+        scales: { xAxes: [{}], yAxes: [{}] }
+    };
+    public barChartLabels: Label[] = [];
+    public barChartType: ChartType = 'bar';
+    public barChartLegend = true;
+
+    public barChartData: ChartDataSets[] = [];
 
     displayedColumns = [];
     dataSource: any;
@@ -154,10 +165,27 @@ export class ContMeasureReportComponent implements OnInit {
                         "DM duplicados": 10.0
                     }
                 }
+            ],
+            "Histogram": [
+                {
+                    "Groups": {
+                        "0": 6,
+                        "1": 0,
+                        "2": 2,
+                        "3": 7,
+                        "4": 12,
+                        "5": 18,
+                        "6": 3,
+                        "7": 2,
+                        "8": 1,
+                        "9": 4
+                    }
+                }
             ]
         }
-        const scatter_dataset = [];
+
         if (res.TimeSeries.length) {
+            const scatter_dataset = [];
             const rawdata = res.TimeSeries[0];
             const keys = Object.keys(rawdata);
             keys.forEach(key => {
@@ -174,8 +202,19 @@ export class ContMeasureReportComponent implements OnInit {
                 });
                 scatter_dataset.push(item);
             })
+            this.scatterChartData = scatter_dataset;
         }
-        this.scatterChartData = scatter_dataset;
+
+
+        if (res.Histogram && res.Histogram.length) {
+            const rawdata = res.Histogram[0]["Groups"];
+            this.barChartLabels = Object.keys(rawdata);
+            const histo_data = {};
+            histo_data["label"] = "report";
+            histo_data["data"] = Object.values(rawdata);
+            this.barChartData.push(histo_data);
+
+        }
 
         if (res.Report.length) {
             const rawdata = res.Report[0];
@@ -191,23 +230,7 @@ export class ContMeasureReportComponent implements OnInit {
     getMachineInfo(payload) {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
             console.log({ res });
-            const scatter_dataset = [];
-            if (res.TimeSeries.length) {
-                const rawdata = res.TimeSeries[0];
-                const keys = Object.keys(rawdata);
-                keys.forEach(key => {
-                    const item = {};
-                    item["label"] = key;
-                    item["pointRadius"] = 10;
-                    item["data"] = [];
-                    const seriesData = rawdata[key];
-                    const seriesDatakeys = Object.keys(seriesData);
-                    seriesDatakeys.forEach(serieskey => {
-                        item["data"].push({ x: serieskey, y: seriesData[serieskey] })
-                    });
-                    scatter_dataset.push(item);
-                })
-            }
+
 
             this.loading = false;
 

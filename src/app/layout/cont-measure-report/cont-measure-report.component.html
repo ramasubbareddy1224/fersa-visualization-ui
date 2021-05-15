@@ -47,40 +47,47 @@
 </div>
 
 <ng-template #showWhenLoaded>
-    <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
-        <div fxFlex>
-            <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
-                [chartType]="scatterChartType">
-            </canvas>
+    <div *ngIf="scatterChartData">
+        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex>
+                <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
+                    [chartType]="scatterChartType">
+                </canvas>
+            </div>
+            <div fxFlex>
+                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                </canvas>
+            </div>
         </div>
-        <div fxFlex>
-            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
-            </canvas>
+        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex>
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType">
+                </canvas>
+            </div>
+        </div>
+        <div class="mb-20">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
+
+                <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+                    <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <table>
+                <thead *ngFor="let item of reportColumns">
+                    <th>
+                        <p>{{item}}</p>
+                    </th>
+                </thead>
+
+            </table>
         </div>
     </div>
-    <div class="mb-20">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-            <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
-                <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
-                <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <table>
-            <thead *ngFor="let item of reportColumns">
-                <th>
-                    <p>{{item}}</p>
-                </th>
-            </thead>
-
-        </table>
-        <!-- <div fxFlex *ngFor="let item of reportColumns">
-             <p>{{item}}</p>
-        </div> -->
-    </div>
 
 </ng-template>
