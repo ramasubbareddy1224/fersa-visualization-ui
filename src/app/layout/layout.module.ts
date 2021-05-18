@@ -17,6 +17,7 @@ import { TraceForPieceComponent } from './trace-for-piece/trace-for-piece.compon
 import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.component';
 import { ChartsModule } from 'ng2-charts';
 import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-report.component';
+import { LineReportComponent } from './line-report/line-report.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-r
         TraceForMachineComponent,
         TraceForPieceComponent,
         TraceForZ3m21Component,
-        ContMeasureReportComponent
+        ContMeasureReportComponent,
+        LineReportComponent
     ]
 
 })

@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center center">
-    <h2>DAILY REPORT FOR MACHINE</h2>
+    <h2>LINE REPORT FOR MACHINE</h2>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="space-around center">
@@ -45,13 +45,12 @@
 <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loading ; else showWhenLoaded">
     <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
 </div>
-
 <ng-template #showWhenLoaded>
-    <div *ngIf="scatterChartData">
+    <div *ngIf="barChartData.length">
         <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex>
-                <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
-                    [chartType]="scatterChartType">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType">
                 </canvas>
             </div>
             <div fxFlex>
@@ -60,14 +59,7 @@
                 </canvas>
             </div>
         </div>
-        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
-            <div fxFlex>
-                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                    [legend]="barChartLegend" [chartType]="barChartType">
-                </canvas>
-            </div>
-        </div>
-        <div class="mb-20">
+        <div class="pb-10">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
@@ -80,6 +72,5 @@
             </table>
         </div>
     </div>
-
 
 </ng-template>

@@ -54,7 +54,22 @@ export class ContMeasureReportComponent implements OnInit {
     // scatter
     public scatterChartOptions: ChartOptions = {
         responsive: true,
-        maintainAspectRatio: true
+        maintainAspectRatio: true,
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Índice'
+                }
+            }], yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Medida'
+                }
+            }]
+        }
     };
 
     public scatterChartData: ChartDataSets[] = null;
@@ -67,13 +82,13 @@ export class ContMeasureReportComponent implements OnInit {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'x-axis'
+                    labelString: 'Grupos'
                 }
             }], yAxes: [{
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'y-axis'
+                    labelString: 'Cantidad'
                 }
             }]
         }
