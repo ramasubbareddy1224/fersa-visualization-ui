@@ -77,7 +77,7 @@ export class LineReportComponent implements OnInit {
 
     public barChartData: ChartDataSets[] = [];
 
-    private machineInfoURL = `${environment.REPORT_API_URL}lineanalysis`;
+    private machineInfoURL = `${environment.REPORT_API_URL}rejectionanalysis`;
 
     constructor(private _httpClient: HttpClient) { }
 
@@ -95,75 +95,85 @@ export class LineReportComponent implements OnInit {
             "lineid": "z3"
 
         }
-        this.loading = false;
+        this.getMachineInfo(payload);
+        //this.loading = false;
 
-        const res = {
-            "Line report": [
-                {
-                    "Variable 1": {
-                        "NOK": 2,
-                        "OK": 248
-                    },
-                    "Variable 2": {
-                        "NOK": 2,
-                        "OK": 10
-                    },
-                    "Variable 3": {
-                        "NOK": 3,
-                        "OK": 22
-                    },
-                    "Variable 4": {
-                        "NOK": 4,
-                        "OK": 25
-                    }
-                }
-            ]
-        }
+        // const res = {
+        //     "Line report": [
+        //         {
+        //             "Variable 1": {
+        //                 "NOK": 2,
+        //                 "OK": 248
+        //             },
+        //             "Variable 2": {
+        //                 "NOK": 2,
+        //                 "OK": 10
+        //             },
+        //             "Variable 3": {
+        //                 "NOK": 3,
+        //                 "OK": 22
+        //             },
+        //             "Variable 4": {
+        //                 "NOK": 4,
+        //                 "OK": 25
+        //             }
+        //         }
+        //     ]
+        // }
 
-        if (res["Line report"] && res["Line report"].length) {
-            const rawdata = res["Line report"][0];
-            const keys = Object.keys(rawdata);
-            this.pieChartLabels = this.barChartLabels = keys;
-            this.displayedColumns.push("report", ...keys);
 
-            const ok_histogram = [];
-            const nok_histogram = [];
-            const colors = [];
-            const report_ok_data = {};
-            report_ok_data["report"] = "OK";
-            const report_nok_data = {};
-            report_nok_data["report"] = "NOK";
+    }
 
-            this.pieChartLabels.forEach((row: any, index) => {
-                colors.push(getColorCode(index));
-                ok_histogram.push(rawdata[row]["OK"]);
-                nok_histogram.push(rawdata[row]["NOK"]);
-                report_ok_data[row] = rawdata[row]["OK"];
-                report_nok_data[row] = rawdata[row]["NOK"];
-            });
+    getMachineInfo(payload) {
+        this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
+            console.log({ res });
 
-            this.pieChartColors.push({ backgroundColor: colors });
+            if (res["Line report"] && res["Line report"].length) {
+                const rawdata = res["Line report"][0];
+                const keys = Object.keys(rawdata);
+                this.pieChartLabels = this.barChartLabels = keys;
+                this.displayedColumns.push("report", ...keys);
 
-            this.pieChartData = nok_histogram;
+                const ok_histogram = [];
+                const nok_histogram = [];
+                const colors = [];
+                const report_ok_data = {};
+                report_ok_data["report"] = "OK";
+                const report_nok_data = {};
+                report_nok_data["report"] = "NOK";
 
-            const histo_ok = {};
-            histo_ok["label"] = "OK";
-            histo_ok["backgroundColor"] = getColorCode(0);
-            histo_ok["borderColor"] = getColorCode(0);;
-            histo_ok["data"] = ok_histogram;
-            this.barChartData.push(histo_ok);
+                this.pieChartLabels.forEach((row: any, index) => {
+                    colors.push(getColorCode(index));
+                    ok_histogram.push(rawdata[row]["OK"]);
+                    nok_histogram.push(rawdata[row]["NOK"]);
+                    report_ok_data[row] = rawdata[row]["OK"];
+                    report_nok_data[row] = rawdata[row]["NOK"];
+                });
 
-            const histo_nok = {};
-            histo_nok["label"] = "NOK";
-            histo_nok["backgroundColor"] = getColorCode(1);
-            histo_nok["borderColor"] = getColorCode(1);;
-            histo_nok["data"] = nok_histogram;
-            this.barChartData.push(histo_nok);
+                this.pieChartColors.push({ backgroundColor: colors });
 
-            this.dataSource = new MatTableDataSource([report_ok_data, report_nok_data]);
+                this.pieChartData = nok_histogram;
 
-        }
+                const histo_ok = {};
+                histo_ok["label"] = "OK";
+                histo_ok["backgroundColor"] = getColorCode(0);
+                histo_ok["borderColor"] = getColorCode(0);;
+                histo_ok["data"] = ok_histogram;
+                this.barChartData.push(histo_ok);
 
+                const histo_nok = {};
+                histo_nok["label"] = "NOK";
+                histo_nok["backgroundColor"] = getColorCode(1);
+                histo_nok["borderColor"] = getColorCode(1);;
+                histo_nok["data"] = nok_histogram;
+                this.barChartData.push(histo_nok);
+
+                this.dataSource = new MatTableDataSource([report_ok_data, report_nok_data]);
+
+            }
+            this.loading = false;
+
+        });
     }
 
 }
