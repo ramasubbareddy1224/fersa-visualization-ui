@@ -156,15 +156,13 @@ export class LineReportComponent implements OnInit {
 
                 const histo_ok = {};
                 histo_ok["label"] = "OK";
-                histo_ok["backgroundColor"] = getColorCode(0);
-                histo_ok["borderColor"] = getColorCode(0);;
+                histo_ok["backgroundColor"] = histo_ok["borderColor"] = histo_ok["hoverBackgroundColor"] = histo_ok["hoverBorderColor"] = getColorCode(0);
                 histo_ok["data"] = ok_histogram;
                 this.barChartData.push(histo_ok);
 
                 const histo_nok = {};
                 histo_nok["label"] = "NOK";
-                histo_nok["backgroundColor"] = getColorCode(1);
-                histo_nok["borderColor"] = getColorCode(1);;
+                histo_nok["backgroundColor"] = histo_nok["borderColor"] = histo_nok["hoverBackgroundColor"] = histo_nok["hoverBorderColor"] = getColorCode(1);
                 histo_nok["data"] = nok_histogram;
                 this.barChartData.push(histo_nok);
 
