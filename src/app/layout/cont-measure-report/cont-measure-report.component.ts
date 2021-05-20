@@ -40,6 +40,11 @@ export class ContMeasureReportComponent implements OnInit {
         responsive: true,
         legend: {
             position: 'top',
+        },
+        title: {
+            display: true,
+            text: "Rejection Rate (%)",
+            position: 'bottom'
         }
     };
     public pieChartLabels: Label[] = ['OK', 'NOK'];
@@ -304,7 +309,7 @@ export class ContMeasureReportComponent implements OnInit {
 
             if (res.Report.length) {
                 const rawdata = res.Report[0];
-                this.pieChartData = [rawdata["0"]['Piezas OK'], rawdata["0"]['Piezas NOK']];
+                this.pieChartData = [rawdata["2"]['Piezas OK'], rawdata["2"]['Piezas NOK']];
                 this.displayedColumns.push(...Object.keys(rawdata["0"]));
                 this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
             }

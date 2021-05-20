@@ -48,12 +48,12 @@
 <ng-template #showWhenLoaded>
     <div *ngIf="barChartData.length">
         <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
-            <div>
+            <div fxFlex="50">
                 <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
                     [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
                 </canvas>
             </div>
-            <div>
+            <div fxFlex="50">
                 <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                     [legend]="barChartLegend" [chartType]="barChartType">
                 </canvas>

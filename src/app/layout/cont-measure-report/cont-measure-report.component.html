@@ -53,6 +53,19 @@
                 <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
                     [chartType]="scatterChartType">
                 </canvas>
+            </div>            
+        </div>
+
+        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex="33">
+                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                </canvas>
+            </div>
+            <div fxFlex="33">
+                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                </canvas>
             </div>
             <div fxFlex>
                 <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
@@ -60,6 +73,7 @@
                 </canvas>
             </div>
         </div>
+
         <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex>
                 <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
@@ -67,7 +81,7 @@
                 </canvas>
             </div>
         </div>
-        <div class="mb-20">
+        <div class="pb-10">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
