@@ -357,8 +357,8 @@ export class ContMeasureReportComponent implements OnInit {
                 this.displayedColumns.push(...Object.keys(rawdata["0"]));
                 this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
             }
-            if (res.PieCharts.length) {
-                const rawdata = res.PieCharts[0];
+            if (res.PieChart.length) {
+                const rawdata = res.PieChart[0];
                 Object.keys(rawdata).forEach(piechart => {
                     const chart = {
                         pieChartType: "pie",
@@ -368,7 +368,7 @@ export class ContMeasureReportComponent implements OnInit {
                         }],
                         pieChartOptions: this.createPieChartOptions(rawdata[piechart]["title"]),
                         pieChartLabels: ['OK', 'NOK'],
-                        pieChartData: [rawdata[piechart]["OK"], rawdata[piechart]["NOK"]]
+                        pieChartData: [rawdata[piechart]["ok"], rawdata[piechart]["nok"]]
                     };
                     this.pieChartList.push(chart);
 
