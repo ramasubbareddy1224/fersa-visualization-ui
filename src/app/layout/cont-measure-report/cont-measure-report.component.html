@@ -53,23 +53,14 @@
                 <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
                     [chartType]="scatterChartType">
                 </canvas>
-            </div>            
+            </div>
         </div>
 
-        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
-            <div fxFlex="33">
-                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
-                </canvas>
-            </div>
-            <div fxFlex="33">
-                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
-                </canvas>
-            </div>
-            <div fxFlex>
-                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+        <div class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <div fxFlex="33" *ngFor="let item of pieChartList">
+                <canvas baseChart [data]="item.pieChartData" [labels]="item.pieChartLabels"
+                    [chartType]="item.pieChartType" [options]="item.pieChartOptions" [colors]="item.pieChartColors"
+                    [legend]="item.pieChartLegend">
                 </canvas>
             </div>
         </div>

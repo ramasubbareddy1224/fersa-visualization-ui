@@ -36,6 +36,7 @@ export class ContMeasureReportComponent implements OnInit {
     endDate = new FormControl(null, Validators.required);
 
     // Pie
+    pieChartList = [];
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {
@@ -118,6 +119,7 @@ export class ContMeasureReportComponent implements OnInit {
         this.loading = true;
         this.barChartData = [];
         this.displayedColumns = [];
+        this.pieChartList = [];
         const payload = {
             "machine": this.selectedMachine.value,
             "date_start": new Date(this.startDate.value).toISOString(),
@@ -219,6 +221,30 @@ export class ContMeasureReportComponent implements OnInit {
         //                 "9": 4
         //             }
         //         }
+        //     ],
+        //     "PieCharts": [
+        //         {
+        //             "Pie 1": {
+        //                 "title": "Rejection Ratio (%)",
+        //                 "OK": "86.6",
+        //                 "NOK": "13.4"
+        //             },
+        //             "Pie 2": {
+        //                 "title": "Coni",
+        //                 "OK": "86.6",
+        //                 "NOK": "13.4"
+        //             },
+        //             "Pie 3": {
+        //                 "title": "Test1",
+        //                 "OK": "76.6",
+        //                 "NOK": "13.4"
+        //             },
+        //             "Pie 4": {
+        //                 "title": "Test",
+        //                 "OK": "76.6",
+        //                 "NOK": "33.4"
+        //             }
+        //         }
         //     ]
         // }
 
@@ -263,10 +289,28 @@ export class ContMeasureReportComponent implements OnInit {
         //     this.displayedColumns.push(...Object.keys(rawdata["0"]));
         //     this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
         // }
+        // if (res.PieCharts.length) {
+        //     const rawdata = res.PieCharts[0];
+        //     Object.keys(rawdata).forEach(piechart => {
+        //         const chart = {
+        //             pieChartType: "pie",
+        //             pieChartLegend: true,
+        //             pieChartColors: [{
+        //                 backgroundColor: ["rgba(0,255,0,0.3)", "rgba(255,0,0,0.3)"]
+        //             }],
+        //             pieChartOptions: this.createPieChartOptions(rawdata[piechart]["title"]),
+        //             pieChartLabels: ['OK', 'NOK'],
+        //             pieChartData: [rawdata[piechart]["OK"], rawdata[piechart]["NOK"]]
+        //         };
+        //         this.pieChartList.push(chart);
+
+        //     })
+
+        // }
 
 
         // this.loading = false;
-        this.getMachineInfo(payload);
+         this.getMachineInfo(payload);
     }
     getMachineInfo(payload) {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
@@ -313,10 +357,44 @@ export class ContMeasureReportComponent implements OnInit {
                 this.displayedColumns.push(...Object.keys(rawdata["0"]));
                 this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
             }
+            if (res.PieCharts.length) {
+                const rawdata = res.PieCharts[0];
+                Object.keys(rawdata).forEach(piechart => {
+                    const chart = {
+                        pieChartType: "pie",
+                        pieChartLegend: true,
+                        pieChartColors: [{
+                            backgroundColor: ["rgba(0,255,0,0.3)", "rgba(255,0,0,0.3)"]
+                        }],
+                        pieChartOptions: this.createPieChartOptions(rawdata[piechart]["title"]),
+                        pieChartLabels: ['OK', 'NOK'],
+                        pieChartData: [rawdata[piechart]["OK"], rawdata[piechart]["NOK"]]
+                    };
+                    this.pieChartList.push(chart);
+
+                })
+
+            }
             this.loading = false;
 
 
         });
+    }
+
+    createPieChartOptions(title) {
+        const options: ChartOptions = {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: title,
+                position: 'bottom'
+            }
+        };
+
+        return options;
     }
 
 }
