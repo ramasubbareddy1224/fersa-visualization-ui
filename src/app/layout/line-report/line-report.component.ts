@@ -7,7 +7,8 @@ import { Label } from 'ng2-charts';
 import { LineReportMachineNames } from './../../constants';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import * as pluginOutsideDataLabels from 'chartjs-plugin-piechart-outlabels';
 @Component({
     selector: 'app-line-report',
     templateUrl: './line-report.component.html',
@@ -41,9 +42,38 @@ export class LineReportComponent implements OnInit {
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {
+            display: false,
             position: 'top',
+        },
+        layout: {
+            padding: {
+                top: 45,
+                left: 0,
+                right: 0,
+                bottom: 45
+            }
+        },
+
+        plugins: {
+            plugins: {
+                legend: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    const label = ctx.chart.data.labels[ctx.dataIndex];
+                    return label;
+                },
+                color: 'black',
+                font: {
+                    size: 45,
+                    weight: 'bold',
+                    lineHeight: 2,
+
+                }
+            }
         }
     };
+    public pieChartPlugins = [pluginOutsideDataLabels];
     public pieChartLabels: Label[] = ['OK', 'NOK'];
     public pieChartData: number[] = [];
     public pieChartType: ChartType = 'pie';
@@ -96,6 +126,7 @@ export class LineReportComponent implements OnInit {
 
         }
         this.getMachineInfo(payload);
+
         //this.loading = false;
 
         // const res = {
@@ -116,9 +147,76 @@ export class LineReportComponent implements OnInit {
         //             "Variable 4": {
         //                 "NOK": 4,
         //                 "OK": 25
+        //             },
+        //             "Variable 5": {
+        //                 "NOK": 3,
+        //                 "OK": 22
+        //             },
+        //             "Variable 6": {
+        //                 "NOK": 4,
+        //                 "OK": 25
+        //             }
+        //             ,
+        //             "Variable 7": {
+        //                 "NOK": 3,
+        //                 "OK": 22
+        //             },
+        //             "Variable 8": {
+        //                 "NOK": 4,
+        //                 "OK": 25
+        //             }
+        //             ,
+        //             "Variable 9": {
+        //                 "NOK": 3,
+        //                 "OK": 22
+        //             },
+        //             "Variable 10": {
+        //                 "NOK": 4,
+        //                 "OK": 25
         //             }
         //         }
         //     ]
+        // }
+        // if (res["Line report"] && res["Line report"].length) {
+        //     const rawdata = res["Line report"][0];
+        //     const keys = Object.keys(rawdata);
+        //     this.pieChartLabels = this.barChartLabels = keys;
+        //     this.displayedColumns.push("report", ...keys);
+
+        //     const ok_histogram = [];
+        //     const nok_histogram = [];
+        //     const colors = [];
+        //     const report_ok_data = {};
+        //     report_ok_data["report"] = "OK";
+        //     const report_nok_data = {};
+        //     report_nok_data["report"] = "NOK";
+
+        //     this.pieChartLabels.forEach((row: any, index) => {
+        //         colors.push(getColorCode(index));
+        //         ok_histogram.push(rawdata[row]["OK"]);
+        //         nok_histogram.push(rawdata[row]["NOK"]);
+        //         report_ok_data[row] = rawdata[row]["OK"];
+        //         report_nok_data[row] = rawdata[row]["NOK"];
+        //     });
+
+        //     this.pieChartColors.push({ backgroundColor: colors });
+
+        //     this.pieChartData = nok_histogram;
+
+        //     const histo_ok = {};
+        //     histo_ok["label"] = "OK";
+        //     histo_ok["backgroundColor"] = histo_ok["borderColor"] = histo_ok["hoverBackgroundColor"] = histo_ok["hoverBorderColor"] = getColorCode(0);
+        //     histo_ok["data"] = ok_histogram;
+        //     this.barChartData.push(histo_ok);
+
+        //     const histo_nok = {};
+        //     histo_nok["label"] = "NOK";
+        //     histo_nok["backgroundColor"] = histo_nok["borderColor"] = histo_nok["hoverBackgroundColor"] = histo_nok["hoverBorderColor"] = getColorCode(1);
+        //     histo_nok["data"] = nok_histogram;
+        //     this.barChartData.push(histo_nok);
+
+        //     this.dataSource = new MatTableDataSource([report_ok_data, report_nok_data]);
+
         // }
 
 

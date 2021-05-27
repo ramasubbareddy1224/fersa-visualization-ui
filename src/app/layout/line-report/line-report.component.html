@@ -2,10 +2,10 @@
     <h2>LINE REPORT FOR MACHINE</h2>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="space-around center">
+<div fxLayout="row" fxLayoutAlign="space-around center" style="margin-bottom: 50px;">
     <div>
         <mat-form-field>
-            <mat-label>Machine</mat-label>
+            <mat-label>Reporte global</mat-label>
             <mat-select [formControl]="selectedMachine" name="selectedMachine">
                 <mat-option *ngFor="let name of machineList" [value]="name.value">
                     {{name.viewValue}}
@@ -48,12 +48,21 @@
 <ng-template #showWhenLoaded>
     <div *ngIf="barChartData.length">
         <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
-            <div fxFlex="50">
+            <div fxFlex="70">
                 <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                    [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
                 </canvas>
             </div>
-            <div fxFlex="50">
+            <!-- <div fxFlex="50">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType">
+                </canvas>
+            </div> -->
+
+        </div>
+        <div class="mb-20" fxLayout="row">
+            <div fxFlex>
                 <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                     [legend]="barChartLegend" [chartType]="barChartType">
                 </canvas>
