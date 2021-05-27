@@ -55,8 +55,11 @@ export class LineReportComponent implements OnInit {
         },
 
         plugins: {
-            plugins: {
-                legend: false
+            outlabels: {
+                color: 'white',
+                font: {
+                    minSize: 11
+                }
             },
             datalabels: {
                 formatter: (value, ctx) => {
@@ -127,7 +130,7 @@ export class LineReportComponent implements OnInit {
         }
         this.getMachineInfo(payload);
 
-        //this.loading = false;
+        // this.loading = false;
 
         // const res = {
         //     "Line report": [

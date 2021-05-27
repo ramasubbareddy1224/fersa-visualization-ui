@@ -208,7 +208,7 @@ export class ContMeasureReportComponent implements OnInit {
         //     ],
         //     "Histogram": [
         //         {
-        //             "Groups": {
+        //             "Group": {
         //                 "0": 6,
         //                 "1": 0,
         //                 "2": 2,
@@ -222,27 +222,27 @@ export class ContMeasureReportComponent implements OnInit {
         //             }
         //         }
         //     ],
-        //     "PieCharts": [
+        //     "PieChart": [
         //         {
         //             "Pie 1": {
         //                 "title": "Rejection Ratio (%)",
-        //                 "OK": "86.6",
-        //                 "NOK": "13.4"
+        //                 "ok": "86.6",
+        //                 "nok": "13.4"
         //             },
         //             "Pie 2": {
         //                 "title": "Coni",
-        //                 "OK": "86.6",
-        //                 "NOK": "13.4"
+        //                 "ok": "86.6",
+        //                 "nok": "13.4"
         //             },
         //             "Pie 3": {
         //                 "title": "Test1",
-        //                 "OK": "76.6",
-        //                 "NOK": "13.4"
+        //                 "ok": "76.6",
+        //                 "nok": "23.4"
         //             },
         //             "Pie 4": {
         //                 "title": "Test",
-        //                 "OK": "76.6",
-        //                 "NOK": "33.4"
+        //                 "ok": 76.601,
+        //                 "nok": 33.401
         //             }
         //         }
         //     ]
@@ -258,7 +258,7 @@ export class ContMeasureReportComponent implements OnInit {
         //         item["backgroundColor"] = colorCode;
         //         item["borderColor"] = colorCode;
         //         item["label"] = key;
-        //         item["pointRadius"] = 8;
+        //         item["pointRadius"] = 4;
         //         item["pointBackgroundColor"] = [colorCode]
         //         item["data"] = [];
 
@@ -274,7 +274,7 @@ export class ContMeasureReportComponent implements OnInit {
 
 
         // if (res.Histogram && res.Histogram.length) {
-        //     const rawdata = res.Histogram[0]["Groups"];
+        //     const rawdata = res.Histogram[0]["Group"];
         //     this.barChartLabels = Object.keys(rawdata);
         //     const histo_data = {};
         //     histo_data["label"] = "report";
@@ -285,22 +285,22 @@ export class ContMeasureReportComponent implements OnInit {
 
         // if (res.Report.length) {
         //     const rawdata = res.Report[0];
-        //     this.pieChartData = [rawdata["0"]['Piezas OK'], rawdata["0"]['Piezas NOK']];
+        //     this.pieChartData = [rawdata["2"]['Piezas OK'], rawdata["2"]['Piezas NOK']];
         //     this.displayedColumns.push(...Object.keys(rawdata["0"]));
         //     this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
         // }
-        // if (res.PieCharts.length) {
-        //     const rawdata = res.PieCharts[0];
+        // if (res.PieChart.length) {
+        //     const rawdata = res.PieChart[0];
         //     Object.keys(rawdata).forEach(piechart => {
         //         const chart = {
         //             pieChartType: "pie",
-        //             pieChartLegend: true,
+        //             pieChartLegend: false,
         //             pieChartColors: [{
         //                 backgroundColor: ["rgba(0,255,0,0.3)", "rgba(255,0,0,0.3)"]
         //             }],
         //             pieChartOptions: this.createPieChartOptions(rawdata[piechart]["title"]),
         //             pieChartLabels: ['OK', 'NOK'],
-        //             pieChartData: [rawdata[piechart]["OK"], rawdata[piechart]["NOK"]]
+        //             pieChartData: [rawdata[piechart]["ok"], rawdata[piechart]["nok"]]
         //         };
         //         this.pieChartList.push(chart);
 
@@ -309,7 +309,7 @@ export class ContMeasureReportComponent implements OnInit {
         // }
 
 
-        // this.loading = false;
+        //this.loading = false;
          this.getMachineInfo(payload);
     }
     getMachineInfo(payload) {
@@ -385,12 +385,31 @@ export class ContMeasureReportComponent implements OnInit {
         const options: ChartOptions = {
             responsive: true,
             legend: {
+                display: true,
                 position: 'top',
             },
             title: {
                 display: true,
                 text: title,
                 position: 'bottom'
+            },
+            layout: {
+                padding: {
+                    top: 40,
+                    left: 0,
+                    right: 0,
+                    bottom: 40
+                }
+            },
+            plugins: {
+                outlabels: {
+                    display: true,
+                    text: '%l',
+                    color: 'black',
+                    font: {
+                        minSize: 11
+                    }
+                }
             }
         };
 

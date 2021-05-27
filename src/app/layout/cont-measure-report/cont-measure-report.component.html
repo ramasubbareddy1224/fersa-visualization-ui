@@ -57,7 +57,7 @@
         </div>
 
         <div class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
-            <div fxFlex="33" *ngFor="let item of pieChartList">
+            <div fxFlex="50" *ngFor="let item of pieChartList">
                 <canvas baseChart [data]="item.pieChartData" [labels]="item.pieChartLabels"
                     [chartType]="item.pieChartType" [options]="item.pieChartOptions" [colors]="item.pieChartColors"
                     [legend]="item.pieChartLegend">
