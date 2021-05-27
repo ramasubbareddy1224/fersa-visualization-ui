@@ -395,13 +395,14 @@ export class ContMeasureReportComponent implements OnInit {
             },
             layout: {
                 padding: {
-                    top: 40,
+                    top: 45,
                     left: 0,
                     right: 0,
                     bottom: 40
                 }
             },
             plugins: {
+                legend:false,
                 outlabels: {
                     display: true,
                     text: '%l',

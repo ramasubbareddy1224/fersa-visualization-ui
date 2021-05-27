@@ -50,7 +50,7 @@ export class LineReportComponent implements OnInit {
                 top: 45,
                 left: 0,
                 right: 0,
-                bottom: 45
+                bottom: 50
             }
         },
 
