@@ -1,4 +1,4 @@
-import { getColorCode } from './../../shared/utility';
+import { getColorCode, getDateTimeString } from './../../shared/utility';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -123,8 +123,8 @@ export class LineReportComponent implements OnInit {
         this.displayedColumns = [];
         const payload = {
             "machine": this.selectedMachine.value,
-            "date_start": new Date(this.startDate.value).toISOString(),
-            "date_end": new Date(this.endDate.value).toISOString(),
+            "date_start": getDateTimeString(this.startDate.value),
+            "date_end": getDateTimeString(this.endDate.value),            
             "lineid": "z3"
 
         }

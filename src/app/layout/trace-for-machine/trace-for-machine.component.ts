@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { getDateTimeString } from './../../shared/utility';
 @Component({
     selector: 'app-trace-for-machine',
     templateUrl: './trace-for-machine.component.html',
@@ -46,13 +46,11 @@ export class TraceForMachineComponent implements OnInit {
     }
     search() {
         this.loading = true;
-        console.log(new Date(this.startDate.value).toISOString());
-        console.log(this.endDate.value);
 
         const payload = {
             "machine": this.selectedMachine.value,
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "from": this.fromSize,
             "size": this.pageSize
 
@@ -79,8 +77,8 @@ export class TraceForMachineComponent implements OnInit {
     downloadData() {
         const payload = {
             "machine": this.selectedMachine.value,
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "size": Excel_Download_Size
 
         }
