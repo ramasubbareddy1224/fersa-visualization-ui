@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
+import { getDateTimeString } from './../../shared/utility';
+
 @Component({
     selector: 'app-trace-for-z3m21',
     templateUrl: './trace-for-z3m21.component.html',
@@ -64,22 +66,22 @@ export class TraceForZ3m21Component implements OnInit {
         this.loading = true;
 
         const ConoInpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "from": this.ConoInfromSize,
             "size": this.ConoInpageSize,
             "field": "DATAMATRIX_IR_IN_CONJUNTO"
         }
         const ConoOutpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "from": this.ConoOutfromSize,
             "size": this.ConoOutpageSize,
             "field": "DATAMATRIX_IR_OUT_CONJUNTO"
         }
         const Ringpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "from": this.RingfromSize,
             "size": this.RingpageSize,
             "field": "DATAMATRIX_OR_CONJUNTO"
@@ -192,20 +194,20 @@ export class TraceForZ3m21Component implements OnInit {
     downloadAllData() {
         const allData = [];
         const ConoInpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "size": this.excel_Download_Size,
             "field": "DATAMATRIX_IR_IN_CONJUNTO"
         }
         const ConoOutpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "size": this.excel_Download_Size,
             "field": "DATAMATRIX_IR_OUT_CONJUNTO"
         }
         const Ringpayload = {
-            "startDate": new Date(this.startDate.value).toISOString(),
-            "endDate": new Date(this.endDate.value).toISOString(),
+            "startDate": getDateTimeString(this.startDate.value),
+            "endDate": getDateTimeString(this.endDate.value),
             "size": this.excel_Download_Size,
             "field": "DATAMATRIX_OR_CONJUNTO"
         }

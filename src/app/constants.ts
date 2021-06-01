@@ -1,9 +1,35 @@
 export const MachineNames = [
-    { value: "z3m01", viewValue: "z3m01" },
-    { value: "z3m02", viewValue: "z3m02" },
-    { value: "z3m03", viewValue: "z3m03" }
+    { value: "z3m01", viewValue: "Z3M01 - Marcaje aros" },
+    { value: "z3m02", viewValue: "Z3M02 - Control dureza aros" },
+    { value: "z3m03_1", viewValue: "Z3M03.1 - Preprocesado planeado" },
+    { value: "z3m03_2", viewValue: "Z3M03.2 - Planeado de caras" },
+    { value: "z3m05", viewValue: "Z3M05 – Control aro [D]" },
+    { value: "z3m06", viewValue: "Z3M06 - Rectificado aro [Lidköping]" },
+    { value: "z3m09", viewValue: "Z3M09 – Control aro [grietas]" },
+    { value: "z3m10", viewValue: "Z3M10 - Marcaje conos" },
+    { value: "z3m11", viewValue: "Z3M11 - Rectificado cono [Nova 30]" },
+    { value: "z3m12", viewValue: "Z3M12 - Rectificado cono [Nova 31]" },
+    { value: "z3m13", viewValue: "Z3M13 – Control cono [d]" },
+    { value: "z3m17", viewValue: "Z3M17 – Control cono [R&S]" },
+    { value: "z3m18", viewValue: "Z3M18 – Control cono [grietas]" },
+    { value: "z3m19", viewValue: "Z3M19 - Montaje cono" },
+    { value: "z3m21_1", viewValue: "Z3M21.1 – Control cono [Ti inv]" },
+    { value: "z3m21_2", viewValue: "Z3M21.2 – Control aro [Te]" },
+    { value: "z3m22", viewValue: "Z3M22 – Control conjunto [HA]" },
+    { value: "z3m25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
 ];
 export const DailyReportMachineNames = [
+    { value: "z3m05", viewValue: "Z3M05 – Control aro [D]" },
+    { value: "z3m09", viewValue: "Z3M09 – Control aro [grietas]" },
+    { value: "z3m21_2", viewValue: "Z3M21.2 – Control aro [Te]" },
+    { value: "z3m13", viewValue: "Z3M13 – Control cono [d]" },
+    { value: "z3m17", viewValue: "Z3M17 – Control cono [R&S]" },
+    { value: "z3m18", viewValue: "Z3M18 – Control cono [grietas]" },
+    { value: "z3m21_1", viewValue: "Z3M21.1 – Control cono [Ti inv]" },
+    { value: "z3m22", viewValue: "Z3M22 – Control conjunto [HA]" },
+    { value: "z3m25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
+];
+export const LineReportMachineNames = [    
     { value: "all", viewValue: "All" },
     { value: "z3m02", viewValue: "z3m02" },
     { value: "z3m05", viewValue: "z3m05" },
@@ -11,15 +37,5 @@ export const DailyReportMachineNames = [
     { value: "z3m17", viewValue: "z3m17" },
     { value: "z3m22", viewValue: "z3m22" }
 ];
-export const LineReportMachineNames = [
-    { value: "Z3M05", viewValue: "Z3M05 – Control aro [D]" },
-    { value: "Z3M09", viewValue: "Z3M09 – Control aro [grietas]" },
-    { value: "Z3M21.2", viewValue: "Z3M21.2 – Control aro [Te]" },
-    { value: "Z3M13", viewValue: "Z3M13 – Control cono [d]" },
-    { value: "Z3M17", viewValue: "Z3M17 – Control cono [R&S]" },
-    { value: "Z3M18", viewValue: "Z3M18 – Control cono [grietas]" },
-    { value: "Z3M21.1", viewValue: "Z3M21.1 – Control cono [Ti inv]" },
-    { value: "Z3M22", viewValue: "Z3M22 – Control conjunto [HA]" },
-    { value: "Z3M25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
-];
 export const Excel_Download_Size = 5000;
+

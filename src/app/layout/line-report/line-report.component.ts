@@ -31,7 +31,7 @@ export class LineReportComponent implements OnInit {
 
     loading = false;
     machineList = LineReportMachineNames;
-    selectedMachine = new FormControl(null, Validators.required);
+    selectedMachine = new FormControl('all', Validators.required);
     startDate = new FormControl(null, Validators.required);
     endDate = new FormControl(null, Validators.required);
 

@@ -31,7 +31,7 @@ export class ContMeasureReportComponent implements OnInit {
 
     loading = false;
     machineList = DailyReportMachineNames;
-    selectedMachine = new FormControl('all', Validators.required);
+    selectedMachine = new FormControl(null, Validators.required);
     startDate = new FormControl(null, Validators.required);
     endDate = new FormControl(null, Validators.required);
 
