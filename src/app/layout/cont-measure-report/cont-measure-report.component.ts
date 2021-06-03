@@ -1,14 +1,13 @@
-import { getColorCode,getDateTimeString } from './../../shared/utility';
+import { getColorCode, getDateTimeString } from './../../shared/utility';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Label,BaseChartDirective } from 'ng2-charts';
 import { DailyReportMachineNames } from './../../constants';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-
-
+import zoomPlugin from 'chartjs-plugin-zoom';
 @Component({
     selector: 'app-cont-measure-report',
     templateUrl: './cont-measure-report.component.html',
@@ -16,6 +15,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ContMeasureReportComponent implements OnInit {
 
+    @ViewChild('scatterChartID') scatterChartID: BaseChartDirective;
     public disabled = false;
     public showSpinners = true;
     public showSeconds = true;
@@ -61,6 +61,30 @@ export class ContMeasureReportComponent implements OnInit {
     public scatterChartOptions: ChartOptions = {
         responsive: true,
         maintainAspectRatio: true,
+        plugins: {
+            zoom: {
+                pan: {
+                    enabled: false,
+                    mode: 'x',
+                    speed: 20,
+                    threshold: 10
+                },
+                zoom: {
+                    enabled: true,
+                    // drag: true,
+                    mode: 'x',
+                    speed: 0.1,
+                    threshold: 2,
+                    sensitivity: 3,
+                    drag: {
+                        borderColor: 'rgba(225,225,225,0.3)',
+                        borderWidth: 5,
+                        backgroundColor: 'rgb(225,225,225)',
+                        animationDuration: 0
+                    },
+                }
+            }
+        },
         scales: {
             xAxes: [{
                 display: true,
@@ -80,6 +104,7 @@ export class ContMeasureReportComponent implements OnInit {
 
     public scatterChartData: ChartDataSets[] = null;
     public scatterChartType: ChartType = 'scatter';
+    public scatterChartPlugins = [zoomPlugin];
 
     public barChartOptions: ChartOptions = {
         responsive: true,
@@ -309,8 +334,9 @@ export class ContMeasureReportComponent implements OnInit {
         // }
 
 
-        //this.loading = false;
-         this.getMachineInfo(payload);
+        // this.loading = false;
+
+        this.getMachineInfo(payload);
     }
     getMachineInfo(payload) {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
@@ -402,7 +428,7 @@ export class ContMeasureReportComponent implements OnInit {
                 }
             },
             plugins: {
-                legend:false,
+                legend: false,
                 outlabels: {
                     display: true,
                     text: '%l',
@@ -416,5 +442,9 @@ export class ContMeasureReportComponent implements OnInit {
 
         return options;
     }
+    resetscatterchart(){
+        this.scatterChartID.chart["resetZoom"]();
+    }
+
 
 }

@@ -30,6 +30,7 @@
         "chart.js": "2.9.3",
         "chartjs-plugin-datalabels": "~1.0.0",
         "chartjs-plugin-piechart-outlabels": "~0.1.4",
+        "chartjs-plugin-zoom": "~0.7.7",
         "core-js": "3.6.5",
         "file-saver": "~2.0.5",
         "ng2-charts": "2.3.0",
