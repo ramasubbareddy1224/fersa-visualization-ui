@@ -3,11 +3,13 @@ export const MachineNames = [
     { value: "z3m02", viewValue: "Z3M02 - Control dureza aros" },
     { value: "z3m03_1", viewValue: "Z3M03.1 - Preprocesado planeado" },
     { value: "z3m03_2", viewValue: "Z3M03.2 - Planeado de caras" },
+    { value: "z3m04", viewValue: "Z3M04 – Rectificado exterior aro [D]" },
     { value: "z3m05", viewValue: "Z3M05 – Control aro [D]" },
     { value: "z3m06", viewValue: "Z3M06 - Rectificado aro [Lidköping]" },
+    { value: "z3m06dm", viewValue: "Z3M06DM – Cámara Lidköping" },
     { value: "z3m09", viewValue: "Z3M09 – Control aro [grietas]" },
     { value: "z3m10", viewValue: "Z3M10 - Marcaje conos" },
-    { value: "z3m11", viewValue: "Z3M11 - Rectificado cono [Nova 30]" },
+    { value: "nova30", viewValue: "Z3M11 - Rectificado cono [Nova 30]" },
     { value: "z3m12", viewValue: "Z3M12 - Rectificado cono [Nova 31]" },
     { value: "z3m13", viewValue: "Z3M13 – Control cono [d]" },
     { value: "z3m17", viewValue: "Z3M17 – Control cono [R&S]" },
@@ -19,6 +21,7 @@ export const MachineNames = [
     { value: "z3m25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
 ];
 export const DailyReportMachineNames = [
+    { value: "z3m02", viewValue: "Z3M02 – Control aro [dureza]" },
     { value: "z3m05", viewValue: "Z3M05 – Control aro [D]" },
     { value: "z3m09", viewValue: "Z3M09 – Control aro [grietas]" },
     { value: "z3m21_2", viewValue: "Z3M21.2 – Control aro [Te]" },

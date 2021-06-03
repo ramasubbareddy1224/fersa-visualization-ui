@@ -47,8 +47,8 @@
 </div>
 
 <ng-template #showWhenLoaded>
-    <div *ngIf="scatterChartData">
-        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+        <div *ngIf="scatterChartData" class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex>
                 <canvas baseChart [datasets]="scatterChartData" [options]="scatterChartOptions"
                     [chartType]="scatterChartType">
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
+        <div *ngIf="pieChartList.length" class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
             <div fxFlex="50" *ngFor="let item of pieChartList">
                 <canvas baseChart [data]="item.pieChartData" [labels]="item.pieChartLabels"
                     [chartType]="item.pieChartType" [options]="item.pieChartOptions" [colors]="item.pieChartColors"
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
+        <div *ngIf="barChartData.length" class="mb-20" fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex>
                 <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                     [legend]="barChartLegend" [chartType]="barChartType">
