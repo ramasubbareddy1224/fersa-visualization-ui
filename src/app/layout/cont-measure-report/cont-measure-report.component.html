@@ -72,7 +72,7 @@
                 </canvas>
             </div>
         </div>
-        <div class="pb-10">
+        <div *ngIf="displayedColumns.length" class="pb-10">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
