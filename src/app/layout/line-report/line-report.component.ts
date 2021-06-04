@@ -47,7 +47,7 @@ export class LineReportComponent implements OnInit {
         },
         layout: {
             padding: {
-                top: 45,
+                top: 75,
                 left: 0,
                 right: 0,
                 bottom: 50
