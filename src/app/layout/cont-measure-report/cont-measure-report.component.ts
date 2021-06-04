@@ -72,7 +72,7 @@ export class ContMeasureReportComponent implements OnInit {
                 zoom: {
                     enabled: true,
                     // drag: true,
-                    mode: 'x',
+                    mode: 'xy',
                     speed: 0.1,
                     threshold: 2,
                     sensitivity: 3,

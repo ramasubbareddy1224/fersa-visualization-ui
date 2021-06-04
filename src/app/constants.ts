@@ -32,7 +32,7 @@ export const DailyReportMachineNames = [
     { value: "z3m22", viewValue: "Z3M22 – Control conjunto [HA]" },
     { value: "z3m25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
 ];
-export const LineReportMachineNames = [    
+export const LineReportMachineNames = [
     { value: "all", viewValue: "All" },
     { value: "z3m02", viewValue: "z3m02" },
     { value: "z3m05", viewValue: "z3m05" },
@@ -40,5 +40,23 @@ export const LineReportMachineNames = [
     { value: "z3m17", viewValue: "z3m17" },
     { value: "z3m22", viewValue: "z3m22" }
 ];
+
+export const TraceForPiece_MachineNameMap = {
+    "z3m01": "Laser aros",
+    "z3m02": "Control dureza",
+    "z3m03_1": "Preprocesado planeado",
+    "z3m03_2": "Planeado",
+    "z3m05": "Control D",
+    "z3m06": "Lidköping",
+    "z3m06dm": "Cámara Lidköping",
+    "z3m09": "Control grietas aro",
+    "z3m10": "Laser conos",
+    "z3m13": "Control agujero d",
+    "z3m17": "Control R&S conos",
+    "z3m18": "Control grietas cono",
+    "z3m19": "Montaje cono",
+    "z3m21_1": "Control Ti cono",
+    "z3m21_2": "Control Te aro"
+}
 export const Excel_Download_Size = 5000;
 

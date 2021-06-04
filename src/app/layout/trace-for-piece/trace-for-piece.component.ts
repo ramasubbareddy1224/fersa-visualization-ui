@@ -1,3 +1,4 @@
+import { TraceForPiece_MachineNameMap } from './../../constants';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -59,13 +60,13 @@ export class TraceForPieceComponent implements OnInit {
                 this.DMConoOut.setValue(res.cono_out);
                 this.DMConoRing.setValue(res.cono_ring);
                 if (res.cono_in_details && res.cono_in_details.length) {
-                    this.INdataSource = new MatTableDataSource(res.cono_in_details.map(row => ({ name: row.machine, date: row.created_at })));
+                    this.INdataSource = new MatTableDataSource(res.cono_in_details.map(row => ({ name: TraceForPiece_MachineNameMap[row.machine], date: row.created_at })));
                 }
                 if (res.cono_out_details && res.cono_out_details.length) {
-                    this.OUTdataSource = new MatTableDataSource(res.cono_out_details.map(row => ({ name: row.machine, date: row.created_at })));
+                    this.OUTdataSource = new MatTableDataSource(res.cono_out_details.map(row => ({ name: TraceForPiece_MachineNameMap[row.machine], date: row.created_at })));
                 }
                 if (res.cono_ring_details && res.cono_ring_details.length) {
-                    this.RINGdataSource = new MatTableDataSource(res.cono_ring_details.map(row => ({ name: row.machine, date: row.created_at })));
+                    this.RINGdataSource = new MatTableDataSource(res.cono_ring_details.map(row => ({ name: TraceForPiece_MachineNameMap[row.machine], date: row.created_at })));
                 }
                 this.loading = false;
             })
