@@ -73,5 +73,8 @@
             </mat-paginator>
         </div>
     </div>
+    <div *ngIf="!IsDataFound" fxLayout="row" fxLayoutAlign="space-around center">
+        <h3>No data found</h3>
+    </div>
 
 </ng-template>

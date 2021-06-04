@@ -40,12 +40,14 @@ export class TraceForMachineComponent implements OnInit {
 
     displayedColumns = [];
     dataSource: any;
+    IsDataFound = true;
     constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit() {
     }
     search() {
         this.loading = true;
+        this.displayedColumns = [];
 
         const payload = {
             "machine": this.selectedMachine.value,
@@ -62,12 +64,14 @@ export class TraceForMachineComponent implements OnInit {
             console.log({ res });
             this.totalCount = res.total;
             if (res.items.length) {
+                this.IsDataFound=true;
                 const row = res.items[0];
                 this.displayedColumns = [].concat('created_at', ...Object.keys(row).filter(d => d != 'created_at'));
                 this.dataSource = new MatTableDataSource(res.items);
             }
             else {
                 this.dataSource = null;
+                this.IsDataFound=false;
             }
             this.loading = false;
 

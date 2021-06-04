@@ -49,14 +49,16 @@
 <ng-template #showWhenLoaded>
     <div>
         <div *ngIf="scatterChartData" class="mb-20" fxLayout="column" fxLayoutAlign="none">
+           
             <div fxFlex>
                 <canvas baseChart #scatterChartID="base-chart" [datasets]="scatterChartData" [options]="scatterChartOptions"
                     [chartType]="scatterChartType" [plugins]="scatterChartPlugins" >
                 </canvas>
             </div>
             <div fxFlex>
-                <button mat-raised-button style="float: right;" (click)="resetscatterchart()">Reset zoom</button>
+                <button mat-raised-button style="float: right;margin-right: 10px;" (click)="resetscatterchart()">Reset zoom</button>
             </div>
+          
         </div>
 
         <div *ngIf="pieChartList.length" class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
