@@ -47,12 +47,16 @@
 <ng-template #showWhenLoaded>
     <div [hidden]="displayedColumns.length==0" class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
         <div fxFlex>
-            <div fxLayout="row" class="mb-5">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-5">
                 <button mat-raised-button color="basic" (click)="downloadData()">
                     <mat-icon>download</mat-icon>
                     Export to Excel
                 </button>
+                <mat-paginator (page)="paged($event)" [hidePageSize]="true" [pageIndex]="pageNumber"
+                    [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[10,50,100]">
+                </mat-paginator>
             </div>
+
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
@@ -69,7 +73,8 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator (page)="paged($event)" [hidePageSize]="true" [pageIndex]="pageNumber" [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[10,50,100]">
+            <mat-paginator (page)="paged($event)" [hidePageSize]="true" [pageIndex]="pageNumber" [length]="totalCount"
+                [pageSize]="pageSize" [pageSizeOptions]="[10,50,100]">
             </mat-paginator>
         </div>
     </div>

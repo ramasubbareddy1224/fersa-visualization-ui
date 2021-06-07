@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import * as pluginOutsideDataLabels from 'chartjs-plugin-piechart-outlabels';
+import { ExcelService } from './../../shared/excel/excel.service';
 @Component({
     selector: 'app-line-report',
     templateUrl: './line-report.component.html',
@@ -112,7 +113,7 @@ export class LineReportComponent implements OnInit {
 
     private machineInfoURL = `${environment.REPORT_API_URL}rejectionanalysis`;
 
-    constructor(private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit(): void {
     }
@@ -273,6 +274,17 @@ export class LineReportComponent implements OnInit {
             this.loading = false;
 
         });
+    }
+    downloadData() {
+        if (this.dataSource && this.dataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.dataSource.data,
+                sheetName: "linereport",
+                excelExtension: '.xlsx',
+                excelFileName: `linereport_${new Date().getTime()}`
+            })
+        }
+
     }
 
 }

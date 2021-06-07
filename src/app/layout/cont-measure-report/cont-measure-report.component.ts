@@ -3,11 +3,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
-import { Label,BaseChartDirective } from 'ng2-charts';
+import { Label, BaseChartDirective } from 'ng2-charts';
 import { DailyReportMachineNames } from './../../constants';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import zoomPlugin from 'chartjs-plugin-zoom';
+import { ExcelService } from './../../shared/excel/excel.service';
 @Component({
     selector: 'app-cont-measure-report',
     templateUrl: './cont-measure-report.component.html',
@@ -135,13 +136,14 @@ export class ContMeasureReportComponent implements OnInit {
 
     private machineInfoURL = `${environment.REPORT_API_URL}rejectionanalysis`;
 
-    constructor(private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) { }
 
     ngOnInit(): void {
     }
 
     search() {
         this.loading = true;
+        this.scatterChartData = null;
         this.barChartData = [];
         this.displayedColumns = [];
         this.pieChartList = [];
@@ -442,8 +444,19 @@ export class ContMeasureReportComponent implements OnInit {
 
         return options;
     }
-    resetscatterchart(){
+    resetscatterchart() {
         this.scatterChartID.chart["resetZoom"]();
+    }
+    downloadData() {
+        if (this.dataSource && this.dataSource.data) {
+            this.excelService.exportToEXcel({
+                data: this.dataSource.data,
+                sheetName: "dailyreport",
+                excelExtension: '.xlsx',
+                excelFileName: `dailyreport_${new Date().getTime()}`
+            })
+        }
+
     }
 
 

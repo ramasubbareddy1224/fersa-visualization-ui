@@ -70,6 +70,10 @@
 
         </div> -->
         <div class="pb-10">
+            <button mat-raised-button class="mb-5" color="basic" (click)="downloadData()">
+                <mat-icon>download</mat-icon>
+                Export to Excel
+            </button>
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
