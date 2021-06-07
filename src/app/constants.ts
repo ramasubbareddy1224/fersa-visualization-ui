@@ -10,7 +10,6 @@ export const MachineNames = [
     { value: "z3m09", viewValue: "Z3M09 – Control aro [grietas]" },
     { value: "z3m10", viewValue: "Z3M10 - Marcaje conos" },
     { value: "nova30", viewValue: "Z3M11 - Rectificado cono [Nova 30]" },
-    { value: "z3m12", viewValue: "Z3M12 - Rectificado cono [Nova 31]" },
     { value: "z3m13", viewValue: "Z3M13 – Control cono [d]" },
     { value: "z3m17", viewValue: "Z3M17 – Control cono [R&S]" },
     { value: "z3m18", viewValue: "Z3M18 – Control cono [grietas]" },
@@ -56,7 +55,11 @@ export const TraceForPiece_MachineNameMap = {
     "z3m18": "Control grietas cono",
     "z3m19": "Montaje cono",
     "z3m21_1": "Control Ti cono",
-    "z3m21_2": "Control Te aro"
+    "z3m21_2": "Control Te aro",
+    "nova30":"Nova 30",
+    "z3m21_3":"Emparejado",
+    "z3m22":"Control HA",
+    "z3m25":"R&S Grasa y retén"
 }
 export const Excel_Download_Size = 5000;
 
