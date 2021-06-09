@@ -31,6 +31,7 @@ export class TraceForMachineComponent implements OnInit {
     selectedMachine = new FormControl(null, Validators.required);
     startDate = new FormControl(null, Validators.required);
     endDate = new FormControl(null, Validators.required);
+    dataMatrix = new FormControl(null)
     pageNumber = 0;
     fromSize = 0;
     pageSize = 100;
@@ -53,6 +54,7 @@ export class TraceForMachineComponent implements OnInit {
             "machine": this.selectedMachine.value,
             "startDate": getDateTimeString(this.startDate.value),
             "endDate": getDateTimeString(this.endDate.value),
+            "dataMatrix": this.dataMatrix.value,
             "from": this.fromSize,
             "size": this.pageSize
 
@@ -64,14 +66,14 @@ export class TraceForMachineComponent implements OnInit {
             console.log({ res });
             this.totalCount = res.total;
             if (res.items.length) {
-                this.IsDataFound=true;
+                this.IsDataFound = true;
                 const row = res.items[0];
                 this.displayedColumns = [].concat('created_at', ...Object.keys(row).filter(d => d != 'created_at'));
                 this.dataSource = new MatTableDataSource(res.items);
             }
             else {
                 this.dataSource = null;
-                this.IsDataFound=false;
+                this.IsDataFound = false;
             }
             this.loading = false;
 
@@ -83,6 +85,7 @@ export class TraceForMachineComponent implements OnInit {
             "machine": this.selectedMachine.value,
             "startDate": getDateTimeString(this.startDate.value),
             "endDate": getDateTimeString(this.endDate.value),
+            "dataMatrix": this.dataMatrix.value,
             "size": Excel_Download_Size
 
         }
