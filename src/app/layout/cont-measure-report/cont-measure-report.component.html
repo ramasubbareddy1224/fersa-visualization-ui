@@ -48,17 +48,21 @@
 
 <ng-template #showWhenLoaded>
     <div>
-        <div *ngIf="scatterChartData" class="mb-20" fxLayout="column" fxLayoutAlign="none">
-           
+        <div *ngIf="lineChartData.length" class="mb-20" fxLayout="column" fxLayoutAlign="none">
             <div fxFlex>
-                <canvas baseChart #scatterChartID="base-chart" [datasets]="scatterChartData" [options]="scatterChartOptions"
-                    [chartType]="scatterChartType" [plugins]="scatterChartPlugins" >
+                <canvas baseChart #scatterChartID="base-chart" [datasets]="lineChartData" [labels]="lineChartLabels"
+                    [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                    [chartType]="lineChartType" [plugins]="lineChartPlugins">
                 </canvas>
+                <!-- <canvas baseChart #scatterChartID="base-chart" [datasets]="scatterChartData"
+                    [options]="scatterChartOptions" [chartType]="scatterChartType" [plugins]="scatterChartPlugins">
+                </canvas> -->
             </div>
             <div fxFlex>
-                <button mat-raised-button style="float: right;margin-right: 10px;" (click)="resetscatterchart()">Reset zoom</button>
+                <button mat-raised-button style="float: right;margin-right: 10px;" (click)="resetscatterchart()">Reset
+                    zoom</button>
             </div>
-          
+
         </div>
 
         <div *ngIf="pieChartList.length" class="mb-20" fxLayout="row wrap" fxLayoutAlign="space-around center">
@@ -85,8 +89,9 @@
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mb-20">
 
                 <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
-                    
-                    <th mat-header-cell *matHeaderCellDef [ngClass]="{'bold-style': ['Piezas OK','Piezas NOK'].includes(disCol)}">{{disCol}} </th>
+
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngClass]="{'bold-style': ['Piezas OK','Piezas NOK'].includes(disCol)}">{{disCol}} </th>
 
                     <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
                 </ng-container>

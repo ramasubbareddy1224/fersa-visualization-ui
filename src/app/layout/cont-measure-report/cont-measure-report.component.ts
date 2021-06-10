@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
-import { Label, BaseChartDirective } from 'ng2-charts';
+import { Color, Label, BaseChartDirective } from 'ng2-charts';
 import { DailyReportMachineNames } from './../../constants';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -131,6 +131,56 @@ export class ContMeasureReportComponent implements OnInit {
 
     public barChartData: ChartDataSets[] = [];
 
+    // line chart settings
+    public lineChartData: ChartDataSets[] = [];
+    public lineChartLabels: Label[] = [];
+    public lineChartOptions: (ChartOptions) = {
+        responsive: true,
+        plugins: {
+            zoom: {
+                pan: {
+                    enabled: false,
+                    mode: 'x',
+                    speed: 20,
+                    threshold: 10
+                },
+                zoom: {
+                    enabled: true,
+                    // drag: true,
+                    mode: 'xy',
+                    speed: 0.1,
+                    threshold: 2,
+                    sensitivity: 3,
+                    drag: {
+                        borderColor: 'rgba(225,225,225,0.3)',
+                        borderWidth: 5,
+                        backgroundColor: 'rgb(225,225,225)',
+                        animationDuration: 0
+                    },
+                }
+            }
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Índice'
+                }
+            }], yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Medida'
+                }
+            }]
+        }
+    };
+    public lineChartColors: Color[] = [];
+    public lineChartLegend = true;
+    public lineChartType: ChartType = 'line';
+    public lineChartPlugins = [zoomPlugin];
+
     displayedColumns = [];
     dataSource: any;
 
@@ -144,6 +194,7 @@ export class ContMeasureReportComponent implements OnInit {
     search() {
         this.loading = true;
         this.scatterChartData = null;
+        this.lineChartData = [];
         this.barChartData = [];
         this.displayedColumns = [];
         this.pieChartList = [];
@@ -279,6 +330,7 @@ export class ContMeasureReportComponent implements OnInit {
         //     const scatter_dataset = [];
         //     const rawdata = res.TimeSeries[0];
         //     const keys = Object.keys(rawdata);
+
         //     keys.forEach((key, inx) => {
         //         const colorCode = getColorCode(inx);
         //         const item = {};
@@ -286,17 +338,20 @@ export class ContMeasureReportComponent implements OnInit {
         //         item["borderColor"] = colorCode;
         //         item["label"] = key;
         //         item["pointRadius"] = 4;
-        //         item["pointBackgroundColor"] = [colorCode]
+        //         item["pointBackgroundColor"] = [colorCode];
+        //         item["fill"] = false;
         //         item["data"] = [];
 
         //         const seriesData = rawdata[key];
         //         const seriesDatakeys = Object.keys(seriesData);
+        //         this.lineChartLabels = seriesDatakeys;
         //         seriesDatakeys.forEach(serieskey => {
         //             item["data"].push({ x: serieskey, y: seriesData[serieskey] })
         //         });
         //         scatter_dataset.push(item);
         //     })
-        //     this.scatterChartData = scatter_dataset;
+        //     //this.scatterChartData = scatter_dataset;
+        //     this.lineChartData = scatter_dataset;
         // }
 
 
@@ -355,17 +410,20 @@ export class ContMeasureReportComponent implements OnInit {
                     item["borderColor"] = colorCode;
                     item["label"] = key;
                     item["pointRadius"] = 4;
-                    item["pointBackgroundColor"] = [colorCode]
+                    item["pointBackgroundColor"] = [colorCode];
+                    item["fill"] = false;
                     item["data"] = [];
 
                     const seriesData = rawdata[key];
                     const seriesDatakeys = Object.keys(seriesData);
+                    this.lineChartLabels = seriesDatakeys;
                     seriesDatakeys.forEach(serieskey => {
                         item["data"].push({ x: serieskey, y: seriesData[serieskey] })
                     });
                     scatter_dataset.push(item);
                 })
                 this.scatterChartData = scatter_dataset;
+                this.lineChartData = scatter_dataset;
             }
 
 
