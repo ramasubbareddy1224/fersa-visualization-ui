@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
-import { getDateTimeString, isFloatNumber } from './../../shared/utility';
+import { getDateTimeString, isFloatNumber, isExponentialNumber } from './../../shared/utility';
 @Component({
     selector: 'app-trace-for-machine',
     templateUrl: './trace-for-machine.component.html',
@@ -71,11 +71,12 @@ export class TraceForMachineComponent implements OnInit {
                 this.displayedColumns = [].concat('created_at', ...Object.keys(row).filter(d => d != 'created_at'));
                 res.items.forEach(currentRow => {
                     Object.keys(currentRow).forEach(rowkey => {
-                        if (isFloatNumber(currentRow[rowkey])) {
+                        if (isFloatNumber(currentRow[rowkey]) || isExponentialNumber(currentRow[rowkey])) {
                             currentRow[rowkey] = currentRow[rowkey].toFixed(5);
                         }
                     })
                 });
+                
                 this.dataSource = new MatTableDataSource(res.items);
             }
             else {

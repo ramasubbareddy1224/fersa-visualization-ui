@@ -25,3 +25,8 @@ export const getDateTimeString = (valueString) => {
 export const isFloatNumber = (num) => {
     return Number(num) === num && num % 1 !== 0;
 }
+export const isExponentialNumber = (num) => {
+    const reg = /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/g 
+    return reg.test(num);
+}
+
