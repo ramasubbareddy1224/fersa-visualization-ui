@@ -1,3 +1,4 @@
+import { CurrentSituationComponent } from './current-situation/current-situation.component';
 import { LineReportComponent } from './line-report/line-report.component';
 import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-report.component';
 import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.component';
@@ -50,6 +51,10 @@ const routes: Routes = [
             {
                 path: 'line-report',
                 component: LineReportComponent
+            },
+            {
+                path: 'current-situation',
+                component: CurrentSituationComponent
             }
 
         ]
