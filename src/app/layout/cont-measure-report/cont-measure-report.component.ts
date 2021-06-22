@@ -220,7 +220,7 @@ export class ContMeasureReportComponent implements OnInit {
         this._httpClient.post(this.machineInfoURL, payload).subscribe((res: any) => {
             console.log({ res });
 
-            if (res.TimeSeries.length) {
+            if (res.TimeSeries && res.TimeSeries.length) {
                 const scatter_dataset = [];
                 const rawdata = res.TimeSeries[0];
                 const keys = Object.keys(rawdata);
@@ -258,13 +258,13 @@ export class ContMeasureReportComponent implements OnInit {
 
             }
 
-            if (res.Report.length) {
+            if (res.Report && res.Report.length) {
                 const rawdata = res.Report[0];
                 this.pieChartData = [rawdata["2"]['Piezas OK'], rawdata["2"]['Piezas NOK']];
                 this.displayedColumns.push(...Object.keys(rawdata["0"]));
                 this.dataSource = new MatTableDataSource([rawdata["0"], rawdata["1"], rawdata["2"]]);
             }
-            if (res.PieChart.length) {
+            if (res.PieChart && res.PieChart.length) {
                 const rawdata = res.PieChart[0];
                 Object.keys(rawdata).forEach(piechart => {
                     const chart = {

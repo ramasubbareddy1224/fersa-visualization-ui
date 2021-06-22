@@ -72,11 +72,11 @@ export class TraceForMachineComponent implements OnInit {
                 res.items.forEach(currentRow => {
                     Object.keys(currentRow).forEach(rowkey => {
                         if (isFloatNumber(currentRow[rowkey]) || isExponentialNumber(currentRow[rowkey])) {
-                            currentRow[rowkey] = currentRow[rowkey].toFixed(5);
+                            currentRow[rowkey] = parseFloat(currentRow[rowkey]).toFixed(5);
                         }
                     })
                 });
-                
+
                 this.dataSource = new MatTableDataSource(res.items);
             }
             else {
