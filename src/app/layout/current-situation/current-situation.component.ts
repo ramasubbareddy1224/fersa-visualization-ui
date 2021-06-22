@@ -16,25 +16,25 @@ import { ContentObserver } from '@angular/cdk/observers';
 })
 export class CurrentSituationComponent implements OnInit {
 
-    private machineInfoURL = `${environment.API_URL}trace-for-piece/getmachinedetails`;
-    loading = false;
-    CanShowGrid = false;
+    private machineInfoURL = `${environment.REPORT_ALARM_API_URL}reports_alarms`;
+    loading = true;
     dataSource: any;
-    shiftRows = [];
+    shiftRows = ["", ""];
+    shiftReportRows = ["", ""];
     shiftdate;
-    headerRow = ["Machine", "Metric"];
+    headerRow = ["Máquina", "Motivo rechazos"];
     dataRows = [];
-
+    IsDataFound = true;
 
 
     constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) {
     }
 
     ngOnInit(): void {
-        this.getDetails();
+        // this.getDetails();
+        this.getMachineDetails();
     }
     search() {
-        this.CanShowGrid = true;
         this.loading = true;
     }
     getDetails() {
@@ -717,6 +717,278 @@ export class CurrentSituationComponent implements OnInit {
                             "Rechazos totales": 38792.0600338901
                         }
                     }
+                },
+                "Shift 3": {
+                    "Numero rechazos": {
+                        "Control dureza aro": {
+                            "Total": 55,
+                            "DM duplicados": 51
+                        },
+                        "Control D aro": {
+                            "Total": 598,
+                            "D": 597,
+                            "D11": 334,
+                            "D21": 496,
+                            "Retalon": 2,
+                            "DM duplicados": 80
+                        },
+                        "Control grietas aro": {
+                            "Total": 345,
+                            "Sondas interiores": 257,
+                            "Reten sup": 81,
+                            "Reten inf": 50,
+                            "Pista sup": 80,
+                            "Pista inf": 60,
+                            "Cara inf": 22,
+                            "Sondas exteriores": 129,
+                            "Diam sup": 102,
+                            "Diam inf": 40,
+                            "Cara sup": 15,
+                            "DM duplicados": 195
+                        },
+                        "Control Te aro": {
+                            "Total": 164,
+                            "Te": 164,
+                            "DM duplicados": 61
+                        },
+                        "Control d cono": {
+                            "Total": 320,
+                            "D": 183,
+                            "D1": 147,
+                            "D2": 105,
+                            "Conicidad": 23,
+                            "Ovalidad": 156,
+                            "DM duplicados": 157
+                        },
+                        "R&S cono": {
+                            "Total": 357,
+                            "D": 353,
+                            "D1": 129,
+                            "D2": 340,
+                            "Altura": 10,
+                            "Pista": 4,
+                            "Testa": 145,
+                            "DM duplicados": 340
+                        },
+                        "Control grietas cono": {
+                            "Total": 324,
+                            "Sondas interiores": 147,
+                            "Diam int": 97,
+                            "Cara ancha": 56,
+                            "Sondas exteriores": 192,
+                            "Cara estrecha": 81,
+                            "Pista": 49,
+                            "Testa": 62,
+                            "Valona": 58,
+                            "DM duplicados": 139
+                        },
+                        "Control Ti cono": {
+                            "Total": 84,
+                            "Valona": 16,
+                            "Ti": 69,
+                            "DM duplicados": 134
+                        },
+                        "HA conjunto": {
+                            "Total": 160,
+                            "HA": 123,
+                            "Par": 43,
+                            "Par Sup": 43,
+                            "Par Inf": 7,
+                            "DM duplicados": 120
+                        },
+                        "R&S grasa": {
+                            "Total": 43,
+                            "Grasa": 32,
+                            "Grasa IN": 22,
+                            "Grasa OUT": 10,
+                            "Torque": 8,
+                            "Reten IN": 3,
+                            "DM duplicados": 30
+                        },
+                        "Todas": {
+                            "Rechazos totales": 1923
+                        }
+                    },
+                    "Rechazos %": {
+                        "Control dureza aro": {
+                            "Total": 1.1,
+                            "DM duplicados": 1.02
+                        },
+                        "Control D aro": {
+                            "Total": 11.96,
+                            "D": 11.94,
+                            "D11": 6.68,
+                            "D21": 9.92,
+                            "Retalon": 0.04,
+                            "DM duplicados": 1.6
+                        },
+                        "Control grietas aro": {
+                            "Total": 6.9,
+                            "Sondas interiores": 5.14,
+                            "Reten sup": 1.62,
+                            "Reten inf": 1.0,
+                            "Pista sup": 1.6,
+                            "Pista inf": 1.2,
+                            "Cara inf": 0.44,
+                            "Sondas exteriores": 2.58,
+                            "Diam sup": 2.04,
+                            "Diam inf": 0.8,
+                            "Cara sup": 0.3,
+                            "DM duplicados": 3.9
+                        },
+                        "Control Te aro": {
+                            "Total": 3.28,
+                            "Te": 3.28,
+                            "DM duplicados": 1.22
+                        },
+                        "Control d cono": {
+                            "Total": 6.4,
+                            "D": 3.66,
+                            "D1": 2.94,
+                            "D2": 2.1,
+                            "Conicidad": 0.46,
+                            "Ovalidad": 3.12,
+                            "DM duplicados": 3.14
+                        },
+                        "R&S cono": {
+                            "Total": 7.43,
+                            "D": 7.34,
+                            "D1": 2.68,
+                            "D2": 7.07,
+                            "Altura": 0.21,
+                            "Pista": 0.08,
+                            "Testa": 3.02,
+                            "DM duplicados": 7.07
+                        },
+                        "Control grietas cono": {
+                            "Total": 0.06,
+                            "Sondas interiores": 2.94,
+                            "Diam int": 1.94,
+                            "Cara ancha": 1.12,
+                            "Sondas exteriores": 3.84,
+                            "Cara estrecha": 1.62,
+                            "Pista": 0.98,
+                            "Testa": 1.24,
+                            "Valona": 1.16,
+                            "DM duplicados": 2.78
+                        },
+                        "Control Ti cono": {
+                            "Total": 1.68,
+                            "Valona": 0.32,
+                            "Ti": 1.38,
+                            "DM duplicados": 2.68
+                        },
+                        "HA conjunto": {
+                            "Total": 3.2,
+                            "HA": 2.46,
+                            "Par": 0.86,
+                            "Par Sup": 0.86,
+                            "Par Inf": 0.14,
+                            "DM duplicados": 2.4
+                        },
+                        "R&S grasa": {
+                            "Total": 0.9,
+                            "Grasa": 0.67,
+                            "Grasa IN": 0.46,
+                            "Grasa OUT": 0.21,
+                            "Torque": 0.17,
+                            "Reten IN": 0.06,
+                            "DM duplicados": 0.63
+                        },
+                        "Todas": {
+                            "Rechazos totales": 3.87920600338901
+                        }
+                    },
+                    "Rechazos PPM": {
+                        "Control dureza aro": {
+                            "Total": 11000.0,
+                            "DM duplicados": 10200.0
+                        },
+                        "Control D aro": {
+                            "Total": 119600.0,
+                            "D": 119400.0,
+                            "D11": 66800.0,
+                            "D21": 99200.0,
+                            "Retalon": 400.0,
+                            "DM duplicados": 16000.0
+                        },
+                        "Control grietas aro": {
+                            "Total": 69000.0,
+                            "Sondas interiores": 51400.0,
+                            "Reten sup": 16200.0,
+                            "Reten inf": 10000.0,
+                            "Pista sup": 16000.0,
+                            "Pista inf": 12000.0,
+                            "Cara inf": 4400.0,
+                            "Sondas exteriores": 25800.0,
+                            "Diam sup": 20400.0,
+                            "Diam inf": 8000.0,
+                            "Cara sup": 3000.0,
+                            "DM duplicados": 39000.0
+                        },
+                        "Control Te aro": {
+                            "Total": 32800.0,
+                            "Te": 32800.0,
+                            "DM duplicados": 12200.0
+                        },
+                        "Control d cono": {
+                            "Total": 64000.0,
+                            "D": 36600.0,
+                            "D1": 29400.0,
+                            "D2": 21000.0,
+                            "Conicidad": 4600.0,
+                            "Ovalidad": 31200.0,
+                            "DM duplicados": 31400.0
+                        },
+                        "R&S cono": {
+                            "Total": 74266.69,
+                            "D": 73434.57,
+                            "D1": 26835.86,
+                            "D2": 70730.19,
+                            "Altura": 2080.3,
+                            "Pista": 832.12,
+                            "Testa": 30164.34,
+                            "DM duplicados": 70730.19
+                        },
+                        "Control grietas cono": {
+                            "Total": 0.06,
+                            "Sondas interiores": 29400.0,
+                            "Diam int": 19400.0,
+                            "Cara ancha": 11200.0,
+                            "Sondas exteriores": 38400.0,
+                            "Cara estrecha": 16200.0,
+                            "Pista": 9800.0,
+                            "Testa": 12400.0,
+                            "Valona": 11600.0,
+                            "DM duplicados": 27800.0
+                        },
+                        "Control Ti cono": {
+                            "Total": 16800.0,
+                            "Valona": 3200.0,
+                            "Ti": 13800.0,
+                            "DM duplicados": 26800.0
+                        },
+                        "HA conjunto": {
+                            "Total": 32000.0,
+                            "HA": 24600.0,
+                            "Par": 8600.0,
+                            "Par Sup": 8600.0,
+                            "Par Inf": 1400.0,
+                            "DM duplicados": 120.0
+                        },
+                        "R&S grasa": {
+                            "Total": 9024.13,
+                            "Grasa": 6715.63,
+                            "Grasa IN": 4617.0,
+                            "Grasa OUT": 2098.64,
+                            "Torque": 1678.91,
+                            "Reten IN": 629.59,
+                            "DM duplicados": 6295.91
+                        },
+                        "Todas": {
+                            "Rechazos totales": 38792.0600338901
+                        }
+                    }
                 }
             }
         }
@@ -727,8 +999,10 @@ export class CurrentSituationComponent implements OnInit {
             this.headerRow.push(...Object.keys(apiData.Report[key]));
 
         });
+        shiftColspan.forEach(shiftrow => {
+            this.shiftReportRows.push(shiftrow.name, "", "");
+        });
         this.shiftRows = shiftColspan;
-
         // create data rows
         const totalRows = [];
         const shift1Key = Object.keys(apiData.Report)[0];
@@ -793,17 +1067,103 @@ export class CurrentSituationComponent implements OnInit {
         this.dataSource = formatData;
         console.log(this.dataRows);
     }
+    getMachineDetails() {
+        this._httpClient.post(this.machineInfoURL, { "mode": "ui" }).subscribe((res: any) => {
+            const apiData = res;
+            this.IsDataFound = true;
+            this.shiftdate = apiData.Text.Body;
+            const shiftColspan = [];
+            Object.keys(apiData.Report).forEach((key, index) => {
+                shiftColspan.push({ name: key, colspan: 3 });
+                this.headerRow.push(...Object.keys(apiData.Report[key]));
+
+            });
+            shiftColspan.forEach(shiftrow => {
+                this.shiftReportRows.push(shiftrow.name, "", "");
+            });
+            this.shiftRows = shiftColspan;
+            // create data rows
+            const totalRows = [];
+            const shift1Key = Object.keys(apiData.Report)[0];
+            const shift1 = apiData.Report[shift1Key];
+            const shift1metrickey = Object.keys(shift1)[0];
+            const shfit1metric = shift1[shift1metrickey];
+            Object.keys(shfit1metric).forEach(machine => {
+                Object.keys(shfit1metric[machine]).forEach(row => {
+                    totalRows.push([machine]);
+                })
+            });
+
+            let shiftRow = 0;
+            let metricRow = 0;
+            Object.keys(apiData.Report).forEach((shiftkey, shiftindex) => {
+                let shift = apiData.Report[shiftkey];
+                shiftRow += 1;
+                Object.keys(shift).forEach((metrickey, metricindex) => {
+                    let metric = shift[metrickey];
+                    metricRow = -1;
+
+                    Object.keys(metric).forEach((machinekey, machineIndex) => {
+                        let machine = metric[machinekey];
+
+                        Object.keys(machine).forEach((mesurekey, measureIndex) => {
+                            metricRow += 1;
+                            if (shiftRow == 1 && metricindex == 0) {
+                                let mesureVal = machine[mesurekey];
+                                if (totalRows[metricRow]) {
+                                    totalRows[metricRow].push(mesurekey, mesureVal);
+                                }
+
+                            }
+                            else {
+                                let mesureVal = machine[mesurekey];
+                                if (totalRows[metricRow]) {
+                                    totalRows[metricRow].push(mesureVal);
+                                }
+                            }
+                        })
+
+                    })
+
+                })
+
+            });
+
+            this.dataRows = totalRows;
+
+            const formatData = {};
+            let machinename = null;
+            totalRows.forEach(cur => {
+                let curitem = cur;
+                let curmachine = curitem[0];
+                if (curmachine != machinename) {
+                    machinename = curmachine;
+                    formatData[curmachine] = [];
+                }
+                formatData[curmachine].push(curitem.slice(1));
+            });
+
+            this.dataSource = formatData;
+            this.loading = false;
+        });
+    }
+
     returnZero() {
         return 0
     }
     downloadData() {
         if (this.dataRows) {
+            const merge = [
+                { s: { r: 0, c: 2 }, e: { r: 0, c: 4 } },
+                { s: { r: 0, c: 5 }, e: { r: 0, c: 7 } },
+                { s: { r: 0, c: 8 }, e: { r: 0, c: 10 } }
+            ];
             this.excelService.exportToEXcel({
-                data: [this.headerRow, ...this.dataRows],
+                data: [this.shiftReportRows, this.headerRow, ...this.dataRows],
                 sheetName: "currentsituation",
                 excelExtension: '.xlsx',
                 excelFileName: `currentsituation_${new Date().getTime()}`
-            }, true)
+            }, true, merge)
         }
     }
 

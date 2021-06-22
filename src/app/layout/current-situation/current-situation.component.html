@@ -5,7 +5,7 @@
     <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
 </div>
 <ng-template #showWhenLoaded>
-    <div [hidden]="CanShowGrid==true">
+    <div [hidden]="dataRows.length==0">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <h5>{{shiftdate}}</h5>
             <mat-checkbox color="primary">Enable email alerts</mat-checkbox>
@@ -18,7 +18,8 @@
         </div>
         <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
             <div fxFlex>
-                <table border="1" style="width: 100%;border: 1px solid black;border-collapse: collapse;margin-bottom: 20px;">
+                <table border="1"
+                    style="width: 100%;border: 1px solid black;border-collapse: collapse;margin-bottom: 20px;">
                     <thead>
                         <th></th>
                         <th></th>
@@ -55,5 +56,8 @@
 
             </div>
         </div>
+    </div>
+    <div *ngIf="!IsDataFound" fxLayout="row" fxLayoutAlign="space-around center">
+        <h3>No data found</h3>
     </div>
 </ng-template>

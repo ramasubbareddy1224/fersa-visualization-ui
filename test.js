@@ -1,8 +1,13 @@
+{
+    "mode":"ui/daily/emailtrigger"
+}
 let d = {
     "Alarm": {
         "Status": "true",
         "Subject": "Z3 traceability warning",
-        "Body": "Alerta automatica de Z3: Limite de rechazos superado."
+        "Body": "Alerta automatica de Z3: Limite de rechazos superado.",
+        "mode":"30 mins",
+        "email":["javier@fersa.com","vinod@fersa.com"]
     },
     "Text": {
         "Body": "Rechazos dia 19-06-2021"
@@ -732,7 +737,7 @@ totalRows.forEach(cur => {
     formatdata[curmachine].push(curitem.splice(1));
 });
 
-//console.log(totalRows);
+console.log(totalRows);
 console.log(formatdata);
 
 
