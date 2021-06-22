@@ -1,0 +1,63 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <h2>Current Shift Details</h2>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loading ; else showWhenLoaded">
+    <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
+</div>
+<ng-template #showWhenLoaded>
+    <div [hidden]="dataRows.length==0">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <h5>{{shiftdate}}</h5>
+            <mat-checkbox color="primary">Enable email alerts</mat-checkbox>
+        </div>
+        <div fxLayout="row">
+            <button class="mb-5" mat-raised-button color="basic" (click)="downloadData()">
+                <mat-icon>download</mat-icon>
+                Export to Excel
+            </button>
+        </div>
+        <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+            <div fxFlex>
+                <table border="1"
+                    style="width: 100%;border: 1px solid black;border-collapse: collapse;margin-bottom: 20px;">
+                    <thead>
+                        <th></th>
+                        <th></th>
+                        <ng-container *ngFor="let item of shiftRows; let i = index">
+                            <th [attr.colspan]="item.colspan">
+                                {{item.name }}
+                            </th>
+                        </ng-container>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <ng-container *ngFor="let item of headerRow">
+                                <td class="txt-center">{{item}}</td>
+                            </ng-container>
+                        </tr>
+
+                        <ng-container *ngFor="let machinekey of dataSource | keyvalue: returnZero">
+                            <tr>
+                                <td [attr.rowspan]="machinekey.value.length + 1">
+                                    {{machinekey.key}}
+                                </td>
+                            </tr>
+                            <tr *ngFor="let rowArray of dataSource[machinekey.key]">
+                                <td [ngClass]="{'txt-right':valindex >0}"
+                                    *ngFor="let val of rowArray;let valindex=index">
+                                    {{val}}
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!IsDataFound" fxLayout="row" fxLayoutAlign="space-around center">
+        <h3>No data found</h3>
+    </div>
+</ng-template>

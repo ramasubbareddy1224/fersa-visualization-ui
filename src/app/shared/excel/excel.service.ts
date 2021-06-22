@@ -10,9 +10,13 @@ export class ExcelService {
     EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     EXCEL_EXTENSION = '.xlsx';
 
-    exportToEXcel(xl: Excel) {
+    exportToEXcel(xl: Excel, skipHeader = false, merge = null) {
         /* generate worksheet */
-        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(xl.data);
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(xl.data, { skipHeader: skipHeader });
+
+        if (merge) {
+            ws["!merges"] = merge;
+        }
 
         /* generate workbook and add the worksheet */
         const wb: XLSX.WorkBook = XLSX.utils.book_new();

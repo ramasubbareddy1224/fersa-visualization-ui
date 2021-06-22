@@ -18,6 +18,7 @@ import { TraceForZ3m21Component } from './trace-for-z3m21/trace-for-z3m21.compon
 import { ChartsModule } from 'ng2-charts';
 import { ContMeasureReportComponent } from './cont-measure-report/cont-measure-report.component';
 import { LineReportComponent } from './line-report/line-report.component';
+import { CurrentSituationComponent } from './current-situation/current-situation.component';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { LineReportComponent } from './line-report/line-report.component';
         TraceForPieceComponent,
         TraceForZ3m21Component,
         ContMeasureReportComponent,
-        LineReportComponent
+        LineReportComponent,
+        CurrentSituationComponent
     ]
 
 })
