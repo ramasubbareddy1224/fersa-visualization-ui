@@ -16,7 +16,8 @@ import { ContentObserver } from '@angular/cdk/observers';
 })
 export class CurrentSituationComponent implements OnInit {
 
-    private machineInfoURL = `${environment.REPORT_ALARM_API_URL}reports_alarms`;
+    private machineInfoURL = `${environment.REPORT_API_URL}reports_alarms`;
+    private visualizationSettingURL = `${environment.API_URL}visualization-setting`;
     loading = true;
     dataSource: any;
     shiftRows = ["", ""];
@@ -25,6 +26,7 @@ export class CurrentSituationComponent implements OnInit {
     headerRow = ["Máquina", "Motivo rechazos"];
     dataRows = [];
     IsDataFound = true;
+    enableEmailAlert = false;
 
 
     constructor(private _httpClient: HttpClient, private readonly excelService: ExcelService) {
@@ -32,6 +34,7 @@ export class CurrentSituationComponent implements OnInit {
 
     ngOnInit(): void {
         // this.getDetails();
+        this.getVisualizationSettings();
         this.getMachineDetails();
     }
     search() {
@@ -1146,6 +1149,23 @@ export class CurrentSituationComponent implements OnInit {
             this.dataSource = formatData;
             this.loading = false;
         });
+    }
+
+    getVisualizationSettings() {
+        this._httpClient.get(this.visualizationSettingURL).subscribe((res: any) => {
+            console.log({ res });
+            this.enableEmailAlert = res.cs_send_email_alert;
+        });
+    }
+
+    saveVisualizationSettings(alertCheck) {
+        const payload = { "key": "cs_send_email_alert", "value": alertCheck }
+        this._httpClient.post(this.visualizationSettingURL, payload).subscribe((res: any) => {
+            console.log({ res });
+        });
+    }
+    saveEmailAlert(event) {
+        this.saveVisualizationSettings(event.checked);
     }
 
     returnZero() {

@@ -16,6 +16,7 @@ export const MachineNames = [
     { value: "z3m19", viewValue: "Z3M19 - Montaje cono" },
     { value: "z3m21_1", viewValue: "Z3M21.1 – Control cono [Ti inv]" },
     { value: "z3m21_2", viewValue: "Z3M21.2 – Control aro [Te]" },
+    { value: "z3m21_3", viewValue: "Z3M21.3 - Emparejado" },
     { value: "z3m22", viewValue: "Z3M22 – Control conjunto [HA]" },
     { value: "z3m25", viewValue: "Z3M25 – Engrase y retén [R&S]" }
 ];

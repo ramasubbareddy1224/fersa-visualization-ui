@@ -8,7 +8,8 @@
     <div [hidden]="dataRows.length==0">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <h5>{{shiftdate}}</h5>
-            <mat-checkbox color="primary">Enable email alerts</mat-checkbox>
+            <mat-checkbox [checked]="enableEmailAlert" (change)="saveEmailAlert($event)" color="primary">Enable email
+                alerts</mat-checkbox>
         </div>
         <div fxLayout="row">
             <button class="mb-5" mat-raised-button color="basic" (click)="downloadData()">
