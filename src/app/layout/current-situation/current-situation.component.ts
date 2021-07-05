@@ -1,6 +1,6 @@
-import { TraceForPiece_MachineNameMap } from './../../constants';
+import { TraceForPiece_MachineNameMap, CurrentSituationMachineNames } from './../../constants';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ExcelService } from './../../shared/excel/excel.service';
 import { environment } from '../../../environments/environment';
@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ContentObserver } from '@angular/cdk/observers';
-
+import { MatOption } from '@angular/material/core';
 @Component({
     selector: 'app-current-situation',
     templateUrl: './current-situation.component.html',
@@ -19,6 +19,12 @@ export class CurrentSituationComponent implements OnInit {
     private machineInfoURL = `${environment.REPORT_API_URL}reports_alarms`;
     private visualizationSettingURL = `${environment.API_URL}visualization-setting`;
     loading = true;
+
+    @ViewChild('allSelected') private allSelected: MatOption;
+
+    machineList = CurrentSituationMachineNames;
+    AllText = "All";
+    selectedMachine = new FormControl();
     dataSource: any;
     shiftRows = ["", ""];
     shiftReportRows = ["", ""];
@@ -35,10 +41,32 @@ export class CurrentSituationComponent implements OnInit {
     ngOnInit(): void {
         // this.getDetails();
         this.getVisualizationSettings();
-        this.getMachineDetails();
+        const machineArrayItems = CurrentSituationMachineNames.map(item => item.viewValue);
+        this.getMachineDetails(machineArrayItems);
     }
     search() {
-        this.loading = true;
+        console.log(this.selectedMachine.value);
+        const machineArrayItems = this.selectedMachine.value.filter(item => item != "All");
+        if (machineArrayItems.length) {
+            this.loading = true;
+            this.getMachineDetails(machineArrayItems);
+        }
+    }
+    tosslePerOne(all) {
+        if (this.allSelected.selected) {
+            this.allSelected.deselect();
+            return false;
+        }
+        if (this.selectedMachine.value.length == this.machineList.length)
+            this.allSelected.select();
+
+    }
+    toggleAllSelection() {
+        if (this.allSelected.selected) {
+            this.selectedMachine.patchValue([...this.machineList.map(item => item.viewValue), "All"]);
+        } else {
+            this.selectedMachine.patchValue([]);
+        }
     }
     getDetails() {
         const data = [
@@ -1070,8 +1098,10 @@ export class CurrentSituationComponent implements OnInit {
         this.dataSource = formatData;
         console.log(this.dataRows);
     }
-    getMachineDetails() {
-        this._httpClient.post(this.machineInfoURL, { "mode": "ui" }).subscribe((res: any) => {
+    getMachineDetails(machineArray) {
+        this._httpClient.post(this.machineInfoURL,
+            { "mode": "ui", "machine": machineArray }
+        ).subscribe((res: any) => {
             const apiData = res;
             this.IsDataFound = true;
             this.shiftdate = apiData.Text.Body;
@@ -1180,9 +1210,9 @@ export class CurrentSituationComponent implements OnInit {
             ];
             this.excelService.exportToEXcel({
                 data: [this.shiftReportRows, this.headerRow, ...this.dataRows],
-                sheetName: "currentsituation",
+                sheetName: "reporte_rechazos",
                 excelExtension: '.xlsx',
-                excelFileName: `currentsituation_${new Date().getTime()}`
+                excelFileName: `reporte_rechazos_${new Date().getTime()}`
             }, true, merge)
         }
     }

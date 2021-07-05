@@ -62,5 +62,19 @@ export const TraceForPiece_MachineNameMap = {
     "z3m22":"Control HA",
     "z3m25":"R&S Grasa y retén"
 }
+export const CurrentSituationMachineNames = [
+    { value: "Control dureza aro", viewValue: "Control dureza aro" },
+    { value: "Control D aro", viewValue: "Control D aro" },
+    { value: "Control grietas aro", viewValue: "Control grietas aro" },
+    { value: "Control Te aro", viewValue: "Control Te aro" },
+    { value: "Control d cono", viewValue: "Control d cono" },
+    { value: "R&S conos", viewValue: "R&S conos" },
+    { value: "Control grietas cono", viewValue: "Control grietas cono" },
+    { value: "Control Ti cono", viewValue: "Control Ti cono" },
+    { value: "HA conjunto", viewValue: "HA conjunto" },
+    { value: "R&S Grasa", viewValue: "R&S Grasa" },
+    { value: "Conexiones", viewValue: "Conexiones" }
+];
+
 export const Excel_Download_Size = 5000;
 

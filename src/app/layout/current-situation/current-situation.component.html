@@ -1,6 +1,29 @@
 <div fxLayout="row" fxLayoutAlign="center center">
     <h2>Current Shift Details</h2>
 </div>
+<div fxLayout="row" fxLayoutAlign="start center">
+    <div>
+        <mat-form-field style="width: 230px;">
+            <mat-label>Reporte global</mat-label>
+            <mat-select [formControl]="selectedMachine" name="selectedMachine" multiple>
+                <mat-select-trigger>
+                    {{selectedMachine.value ? selectedMachine.value[0] : ''}}
+                    <span *ngIf="selectedMachine.value?.length > 1">
+                        (+{{selectedMachine.value.length - 1}})
+                    </span>
+                </mat-select-trigger>
+                <mat-option #allSelected (click)="toggleAllSelection()" [value]="AllText">All</mat-option>
+                <mat-option *ngFor="let name of machineList" [value]="name.value"
+                    (click)="tosslePerOne(allSelected.viewValue)">
+                    {{name.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="search()">Submit</button>
+    </div>
+</div>
 <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loading ; else showWhenLoaded">
     <mat-progress-spinner diameter="40" mode="indeterminate" value="100"></mat-progress-spinner>
 </div>
@@ -44,8 +67,8 @@
                                     {{machinekey.key}}
                                 </td>
                             </tr>
-                            <tr *ngFor="let rowArray of dataSource[machinekey.key]">
-                                <td [ngClass]="{'txt-right':valindex >0}"
+                            <tr *ngFor="let rowArray of dataSource[machinekey.key];let rowIndex=index">
+                                <td [ngClass]="{'txt-right':valindex >0,'bg-gray':rowIndex%2==0}"
                                     *ngFor="let val of rowArray;let valindex=index">
                                     {{val}}
                                 </td>
