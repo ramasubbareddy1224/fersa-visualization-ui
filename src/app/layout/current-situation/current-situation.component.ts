@@ -43,6 +43,7 @@ export class CurrentSituationComponent implements OnInit {
         this.getMachineDetails();
     }
     savemachines() {
+        this.loading = true;
         console.log(this.selectedMachine.value);
         const machineArrayItems = this.selectedMachine.value.filter(item => item != "All").join();
         const payload = { "key": "email_alert_machines", "value": machineArrayItems };
@@ -1201,6 +1202,7 @@ export class CurrentSituationComponent implements OnInit {
     saveVisualizationSettings(payload) {
         this._httpClient.post(this.visualizationSettingURL, payload).subscribe((res: any) => {
             console.log({ res });
+            this.loading = false;
         });
     }
     saveEmailAlert(event) {
