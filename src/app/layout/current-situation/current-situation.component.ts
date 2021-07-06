@@ -39,18 +39,18 @@ export class CurrentSituationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.getDetails();
         this.getVisualizationSettings();
-        const machineArrayItems = CurrentSituationMachineNames.map(item => item.viewValue);
-        this.getMachineDetails(machineArrayItems);
+        this.getMachineDetails();
     }
-    search() {
+    savemachines() {
         console.log(this.selectedMachine.value);
-        const machineArrayItems = this.selectedMachine.value.filter(item => item != "All");
-        if (machineArrayItems.length) {
-            this.loading = true;
-            this.getMachineDetails(machineArrayItems);
-        }
+        const machineArrayItems = this.selectedMachine.value.filter(item => item != "All").join();
+        const payload = { "key": "email_alert_machines", "value": machineArrayItems };
+        this.saveVisualizationSettings(payload);
+        // if (machineArrayItems.length) {
+        //     this.loading = true;
+        //     this.getMachineDetails(machineArrayItems);
+        // }
     }
     tosslePerOne(all) {
         if (this.allSelected.selected) {
@@ -1098,9 +1098,9 @@ export class CurrentSituationComponent implements OnInit {
         this.dataSource = formatData;
         console.log(this.dataRows);
     }
-    getMachineDetails(machineArray) {
+    getMachineDetails() {
         this._httpClient.post(this.machineInfoURL,
-            { "mode": "ui", "machine": machineArray }
+            { "mode": "ui" }
         ).subscribe((res: any) => {
             const apiData = res;
             this.IsDataFound = true;
@@ -1185,17 +1185,27 @@ export class CurrentSituationComponent implements OnInit {
         this._httpClient.get(this.visualizationSettingURL).subscribe((res: any) => {
             console.log({ res });
             this.enableEmailAlert = res.cs_send_email_alert;
+            const machines = res.email_alert_machines;
+            if (machines) {
+                const savedmachineArray = res.email_alert_machines.split(",");
+                if (savedmachineArray.length == CurrentSituationMachineNames.length) {
+                    savedmachineArray.push("All");
+                }
+                this.selectedMachine.setValue(savedmachineArray);
+            }
+
+
         });
     }
 
-    saveVisualizationSettings(alertCheck) {
-        const payload = { "key": "cs_send_email_alert", "value": alertCheck }
+    saveVisualizationSettings(payload) {
         this._httpClient.post(this.visualizationSettingURL, payload).subscribe((res: any) => {
             console.log({ res });
         });
     }
     saveEmailAlert(event) {
-        this.saveVisualizationSettings(event.checked);
+        const payload = { "key": "cs_send_email_alert", "value": event.checked }
+        this.saveVisualizationSettings(payload);
     }
 
     returnZero() {
